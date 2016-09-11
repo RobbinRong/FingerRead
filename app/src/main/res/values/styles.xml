@@ -1,0 +1,57 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!-- Base application theme. -->
+    <style name="DayTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="background">@color/white</item>
+        <item name="barTitleColor">@color/bar_title</item>
+        <item name="barColor">@color/primary</item>
+        <item name="textColor">@color/text_color</item>
+        <item name="textLight">@color/text_light</item>
+        <item name="textBright">@color/primary</item>
+        <item name="dividerColor">@color/dividerColor</item>
+    </style>
+    <style name="CollapsingToolbarTitleStyle.About" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+    <style name="MyToolbar" parent="Base.Widget.AppCompat.Toolbar">
+        <!--Toolbar标题颜色-->
+        <item name="titleTextColor">?attr/toolbar_Text_Color</item>
+        <!--ActionBar默认按钮的颜色-->
+        <item name="colorControlNormal">?attr/toolbar_Text_Color</item>
+        <!--弹出菜单的样式-->
+        <item name="popupTheme">@style/MyToolbarPopupTheme</item>
+        <!--子控件相对父控件位置-->
+        <item name="android:gravity">center</item>
+        <!--NavigationButton-->
+        <item name="toolbarNavigationButtonStyle">@style/Widget.AppCompat.Toolbar.Button.Navigation</item>
+
+    </style>
+    <style name="MyToolbarPopupTheme" parent="ThemeOverlay.AppCompat.Light">
+        <!--Menu文字颜色-->
+        <item name="android:textColorPrimary">?attr/toolbar_Menu_Text_Color</item>
+        <!--子控件相对父控件位置-->
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="CustomCollectTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_collect</item>
+    </style>
+    <style name="CardView.Content" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+</resources>
