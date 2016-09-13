@@ -51,4 +51,5 @@ public class DailyDao {
         }
         return list;
     }
+
 }

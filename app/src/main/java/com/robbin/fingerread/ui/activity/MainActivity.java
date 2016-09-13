@@ -18,6 +18,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.robbin.fingerread.R;
+import com.robbin.fingerread.ui.fragment.BaseCollectFragment;
 import com.robbin.fingerread.ui.fragment.BaseReadFragment;
 import com.robbin.fingerread.ui.fragment.BaseScienceFragment;
 import com.robbin.fingerread.ui.fragment.DailyFragment;
@@ -64,6 +65,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
                         new PrimaryDrawerItem().withName(R.string.daily).withIcon(R.mipmap.ic_home).withIdentifier(R.mipmap.ic_home).withTextColor(ContextCompat.getColor(this,R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.read).withIcon(R.mipmap.ic_reading).withIdentifier(R.mipmap.ic_reading).withTextColor(ContextCompat.getColor(this,R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.science).withIcon(R.mipmap.ic_science).withIdentifier(R.mipmap.ic_science).withTextColor(ContextCompat.getColor(this,R.color.text_color)),
+                        new PrimaryDrawerItem().withName(R.string.collect).withIcon(R.mipmap.ic_collect_grey).withIdentifier(R.mipmap.ic_collect_grey).withTextColor(ContextCompat.getColor(this,R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.about).withIcon(R.mipmap.ic_about).withIdentifier(R.mipmap.ic_about).withTextColor(ContextCompat.getColor(this,R.color.text_color))
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -83,6 +85,11 @@ public class MainActivity extends BaseActivityWithNoSwip {
                                 if (currentFragment instanceof BaseScienceFragment)
                                     return  false;
                                 currentFragment=new BaseScienceFragment();
+                                break;
+                            case R.mipmap.ic_collect_grey:
+                                if (currentFragment instanceof BaseCollectFragment)
+                                    return  false;
+                                currentFragment=new BaseCollectFragment();
                                 break;
                             case R.mipmap.ic_about:
                                 Intent toAbout = new Intent(MainActivity.this, AboutActivity.class);
@@ -104,6 +111,9 @@ public class MainActivity extends BaseActivityWithNoSwip {
             switchFragment(currentFragment, getString(R.string.read));
         }else if(currentFragment instanceof BaseScienceFragment){
             switchFragment(currentFragment, getString(R.string.science));
+        }
+        else if(currentFragment instanceof BaseCollectFragment){
+            switchFragment(currentFragment, getString(R.string.collect));
         }
     }
     private void switchFragment(Fragment fragment,String title){
