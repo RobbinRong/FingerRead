@@ -7,10 +7,10 @@
         android:id="@+id/menu_collect"
         app:showAsAction="always"
         android:icon="@drawable/ic_star_white"/>
-<item
-    android:icon="@drawable/ic_share"
-    android:id="@+id/menu_action_share"
-    android:title=""
-    app:showAsAction="always"
-    ></item>
+    <item
+        android:icon="@drawable/ic_share"
+        android:id="@+id/menu_action_share"
+        android:title=""
+        app:showAsAction="always"
+        ></item>
 </menu>

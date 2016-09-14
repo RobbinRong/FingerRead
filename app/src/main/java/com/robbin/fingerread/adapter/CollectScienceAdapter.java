@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.robbin.fingerread.R;
-import com.robbin.fingerread.bean.NewsDetail;
+import com.robbin.fingerread.bean.ArticleBean;
 import com.robbin.fingerread.constant.Settings;
-import com.robbin.fingerread.ui.activity.DailyDetailActivity;
 
 import java.util.List;
 
@@ -24,11 +23,11 @@ import butterknife.ButterKnife;
 /**
  * Created by OneAPM on 2016/9/13.
  */
-public class CollectDailyAdapter  extends  RecyclerView.Adapter<CollectDailyAdapter.DailViewHolder>  {
+public class CollectScienceAdapter extends  RecyclerView.Adapter<CollectScienceAdapter.DailViewHolder>  {
 
     private Context context;
-    private List<NewsDetail> list;
-    public CollectDailyAdapter(Context context, List<NewsDetail> list) {
+    private List<ArticleBean> list;
+    public CollectScienceAdapter(Context context, List<ArticleBean> list) {
         this.context=context;
         this.list=list;
 
@@ -36,23 +35,24 @@ public class CollectDailyAdapter  extends  RecyclerView.Adapter<CollectDailyAdap
 
     @Override
     public DailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.daily_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.science_item,parent,false);
         return new DailViewHolder(view);
 
     }
 
     @Override
     public void onBindViewHolder(final DailViewHolder holder, int position) {
-        final NewsDetail detail = list.get(position);
+        final ArticleBean articleBean = list.get(position);
         if(Settings.isNightMode){
             holder.mCvItem.setCardBackgroundColor(Color.rgb(100,100,100));
         }
-        holder.mTvTitle.setText(detail.getTitle());
-        Glide.with(context).load(detail.getImage()).placeholder(R.drawable.ic_placeholder).into(holder.mIvNews);
+        holder.mTvTitle.setText(articleBean.getTitle());
+        holder.mComment.setText(articleBean.getReplies_count()+"");
+        Glide.with(context).load(articleBean.getImage_info().getUrl()).placeholder(R.drawable.ic_placeholder).into(holder.mIvNews);
         holder.mCvItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DailyDetailActivity.start(context,detail);
+               // DailyDetailActivity.start(context,articleBean);
             }
         });
     }
@@ -72,6 +72,10 @@ public class CollectDailyAdapter  extends  RecyclerView.Adapter<CollectDailyAdap
 
         @Bind(R.id.tv_title)
         TextView mTvTitle;
+        @Bind(R.id.comment)
+        TextView mComment;
+
+
         public DailViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

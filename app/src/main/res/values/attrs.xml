@@ -7,11 +7,5 @@
     <attr name="dividerColor" format="color"/>
     <attr name="barColor" format="color"/>
     <attr name="toolbar_Text_Color" format="color"/>
-    <attr name="MyToolbarPopupTheme" format="color"/>
-    <attr name="toolbar_Menu_Text_Color" format="color"/>
-    <attr name="main_item_background" format="color"/>
 
-    <attr name="textColorFirst" format="color"/>
-    <attr name="textColorSecond" format="color"/>
-    <attr name="textColorThird" format="color"/>
 </resources>

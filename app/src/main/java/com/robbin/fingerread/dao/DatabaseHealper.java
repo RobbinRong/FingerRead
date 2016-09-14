@@ -31,6 +31,7 @@ public class DatabaseHealper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DB.CREATE_TABLE_READ);
         db.execSQL(DB.CREATE_TABLE_COLLECT_DAILY);
+        db.execSQL(DB.CREATE_TABLE_COLLECT_SCIENCE);
 
     }
 

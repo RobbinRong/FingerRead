@@ -58,6 +58,7 @@ public  class DailyFragment extends BaseFragment implements RefreshLayout.OnRefr
 //        activity.setSupportActionBar(mToolbar);
 
         //refreshLayout.setOnLoadListener(this);
+
         getActivity().findViewById(R.id.tab_layout).setVisibility(View.GONE);
         refreshLayout.setOnRefreshListener(this);
         linearLayoutManager=new LinearLayoutManager(getActivity());

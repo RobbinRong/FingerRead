@@ -186,6 +186,7 @@ public class DailyDetailFragment extends BaseFragment{
                     Snackbar.make(mainContent, R.string.notify_add_to_collection,Snackbar.LENGTH_SHORT).show();
 
                 }
+                return  true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -197,7 +198,7 @@ public class DailyDetailFragment extends BaseFragment{
     }
 
     private void removeFromCollection() {
-        dao.delete(detail);
+        dao.deleteDaily(detail);
     }
 
     private void share() {

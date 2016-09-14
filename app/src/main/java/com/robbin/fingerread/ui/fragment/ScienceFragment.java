@@ -4,8 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.robbin.fingerread.adapter.ScienceAdapter;
+import com.robbin.fingerread.bean.ArticleBean;
 import com.robbin.fingerread.bean.ScienceBean;
 import com.robbin.fingerread.network.manager.RetrofitManager;
+
+import java.util.ArrayList;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -70,7 +73,7 @@ public class ScienceFragment extends BaseListFragment {
 
     @Override
     public RecyclerView.Adapter initAdapter() {
-        adapter=new ScienceAdapter(new ScienceBean(),getActivity());
+        adapter=new ScienceAdapter(new ArrayList<ArticleBean>(),getActivity());
         return adapter;
     }
 }

@@ -67,11 +67,11 @@
                         android:checked="false" />
                     <TextView
                         android:id="@+id/text"
-                        android:text="Collection"
+                        android:text="@string/collect"
                         android:textColor="?attr/textLight"
                         android:layout_below="@+id/collect_cb"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </RelativeLayout>

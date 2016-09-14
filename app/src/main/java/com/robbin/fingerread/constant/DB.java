@@ -9,6 +9,7 @@ public class DB {
 
     public static final String TABLE_READ = "read";
     public static final String TABLE_COLLECT_DAILY = "collectdaily";
+    public static final String TABLE_COLLECT_SCIENCE = "collectscience";
     public static final String COLUMN_ID = "newid";
 
     public static final String COLLECT_DAILY_ID = "collectdailyid";
@@ -16,8 +17,15 @@ public class DB {
     public static final String COLLECT_DAILY_TITLE = "collectdailytitle";
     public static final String COLLECT_DAILY_IMAGE = "collectdailyimage";
     public static final String COLLECT_DAILY_IMAGESOURCE = "collectdailyimagesource";
+
+    public static final String COLLECT_SCIENCE_TITLE = "collectsciencetitle";
+    public static final String COLLECT_SCIENCE_HOT = "collectsciencehot";
+    public static final String COLLECT_SCIENCE_URL = "collectscienceurl";
+    public static final String COLLECT_SCIENCE_IMAGE = "collectscienceimage";
     public static final String CREATE_TABLE_READ = "create table " + TABLE_READ + "(" + COLUMN_ID + " text)";
     public static final String CREATE_TABLE_COLLECT_DAILY = "create table " + TABLE_COLLECT_DAILY + "(" + COLLECT_DAILY_ID +
             " text,"+COLLECT_DAILY_TITLE+" varchar(50),"+COLLECT_DAILY_IMAGE+" varchar(100),"+COLLECT_DAILY_IMAGESOURCE+" varchar(20),"+COLLECT_DAILY_BODY+" text)";
+    public static final String CREATE_TABLE_COLLECT_SCIENCE = "create table " + TABLE_COLLECT_SCIENCE + "(" + COLLECT_SCIENCE_TITLE +
+            " varchar(50),"+COLLECT_SCIENCE_HOT+" int,"+COLLECT_SCIENCE_URL+" varchar(100),"+COLLECT_SCIENCE_IMAGE+" varchar(100))";
 
 }

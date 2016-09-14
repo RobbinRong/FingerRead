@@ -1,15 +1,9 @@
 package com.robbin.fingerread.ui.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
@@ -29,19 +23,18 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.robbin.fingerread.FingerReadApplication;
 import com.robbin.fingerread.R;
 import com.robbin.fingerread.bean.ArticleBean;
-import com.robbin.fingerread.ui.activity.DailyDetailActivity;
+import com.robbin.fingerread.dao.CollectDao;
 import com.robbin.fingerread.ui.activity.ScienceDetailActivity;
 import com.robbin.fingerread.utils.DisplayUtil;
 
-import java.io.IOException;
+import java.util.List;
 
 import butterknife.Bind;
-import okhttp3.Request;
 
 /**
  * Created by Administrator on 2016/9/11.
@@ -64,6 +57,9 @@ public class ScienceDetailFragment extends  BaseFragment {
     @Bind(R.id.networkBtn)
     protected ImageButton networkBtn;
     private ArticleBean articleBean;
+    protected boolean isCollected;
+    private CollectDao dao;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_science_detail;
@@ -72,6 +68,14 @@ public class ScienceDetailFragment extends  BaseFragment {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         articleBean= (ArticleBean) getArguments().getSerializable(ScienceDetailActivity.KEY_SCIENCE);
+        dao=new CollectDao(FingerReadApplication.AppContext);
+        List<ArticleBean> allScience = dao.getAllScience();
+        for(ArticleBean a:allScience){
+            if(a.getUrl().equals(articleBean.getUrl())){
+                isCollected=true;
+                break;
+            }
+        }
         setHasOptionsMenu(true);
         init();
         loadData();
@@ -128,12 +132,28 @@ public class ScienceDetailFragment extends  BaseFragment {
                 loadData();
             }
         });
+
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_detail,menu);
+        updateCollectionMenu(menu.findItem(R.id.menu_collect));
+    }
+    protected void updateCollectionMenu(MenuItem item){
+        if(isCollected){
+            item.setIcon(R.drawable.ic_star_black);
+        }else {
+            item.setIcon(R.drawable.ic_star_white);
+        }
+    }
+    private void addToCollection() {
+        dao.insertScience(articleBean);
+    }
+
+    private void removeFromCollection() {
+        dao.deleteScience(articleBean);
     }
 
     @Override
@@ -144,6 +164,20 @@ public class ScienceDetailFragment extends  BaseFragment {
                 return  true;
             case R.id.menu_action_share:
                 share();
+                return  true;
+            case R.id.menu_collect:
+                if(isCollected){
+                    removeFromCollection();
+                    isCollected=false;
+                    updateCollectionMenu(item);
+                    Snackbar.make(mainContent, R.string.notify_remove_from_collection,Snackbar.LENGTH_SHORT).show();
+                }
+                else {
+                    addToCollection();
+                    isCollected = true;
+                    updateCollectionMenu(item);
+                    Snackbar.make(mainContent, R.string.notify_add_to_collection,Snackbar.LENGTH_SHORT).show();
+                }
                 return  true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -169,45 +203,6 @@ public class ScienceDetailFragment extends  BaseFragment {
         }
         Glide.with(getActivity()).load(url).placeholder(R.drawable.ic_placeholder).into(topImage);
         progressBarTopPic.setVisibility(View.GONE);
-
-
-
-      /*  Request.Builder builder = new Request.Builder();
-        builder.url(url);
-        Request request = builder.build();
-
-        HttpUtil.enqueue(request, new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        setDefaultColor();
-                    }
-                });
-            }
-            @Override
-            public void onResponse(Response response) throws IOException {
-                final Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(bitmap == null){
-                            setDefaultColor();
-                            return;
-                        }
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
-                            topImage.setBackground(new BitmapDrawable(getResources(), bitmap));
-                        } else{
-                            topImage.setImageURI(Uri.parse(url));
-                        }
-                        mainContent.setBackgroundColor(ImageUtil.getImageColor(bitmap));
-                        progressBarTopPic.setVisibility(View.GONE);
-                    }
-                });
-            }
-        });*/
     }
     protected void setDefaultColor(){
         mainContent.setBackgroundColor(Color.rgb(67,76,66));
@@ -230,6 +225,7 @@ public class ScienceDetailFragment extends  BaseFragment {
         contentView.loadUrl(articleBean.getUrl());
         setMainContentBg(articleBean.getImage_info().getUrl());
         hideLoading();
+
     }
     public static Fragment newInstance(ArticleBean articleBean) {
         Bundle bundle = new Bundle();

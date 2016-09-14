@@ -1,6 +1,7 @@
 package com.robbin.fingerread.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.robbin.fingerread.R;
 import com.robbin.fingerread.bean.News;
+import com.robbin.fingerread.constant.Settings;
 import com.robbin.fingerread.dao.DailyDao;
 import com.robbin.fingerread.ui.activity.DailyDetailActivity;
 import com.robbin.fingerread.utils.DateUtil;
@@ -85,6 +87,9 @@ public class  DailyAdapter   extends RecyclerView.Adapter<DailyAdapter.DailViewH
     }
     private void bindViewHolder(final DailViewHolder holder, int position, final News news) {
         holder.mTvTitle.setText(news.getTitle());
+        if(Settings.isNightMode){
+            holder.mCvItem.setCardBackgroundColor(Color.rgb(100,100,100));
+        }
         List<String> images = news.getImages();
         if (images != null && images.size() > 0) {
             Glide.with(mContext).load(images.get(0)).placeholder(R.drawable.ic_placeholder).into(holder.mIvNews);
