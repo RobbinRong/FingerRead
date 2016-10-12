@@ -42,7 +42,7 @@ public class Utils {
                 break;
             case 2:
                 language = "zh";
-                country = "TW";
+                country = "HK";
                 break;
             default:
                 language = "en";

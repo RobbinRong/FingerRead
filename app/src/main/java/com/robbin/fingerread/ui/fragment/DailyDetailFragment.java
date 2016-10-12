@@ -10,6 +10,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -97,7 +98,7 @@ public class DailyDetailFragment extends BaseFragment{
     }
 
     private void loadData() {
-        if(detail!=null){
+        if(detail!=null){//收藏中复用本类时，不用请求网络数据。
           loadSucess(detail);
             return;
         }

@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
                         new SecondaryDrawerItem().withName(Settings.isNightMode == true ? R.string.text_day_mode: R.string.text_night_mode)
                         .withIcon(Settings.isNightMode == true?R.mipmap.ic_day_white:R.mipmap.ic_night).withIdentifier(R.mipmap.ic_night)
                         .withTextColor(Settings.isNightMode?ContextCompat.getColor(this, R.color.white):ContextCompat.getColor(this,R.color.text_light))
-                        ,new SecondaryDrawerItem().withName("语言")
+                        ,new SecondaryDrawerItem().withName(R.string.text_language)
                                 .withIcon(Settings.isNightMode == true?R.mipmap.ic_day_white:R.mipmap.ic_night).withIdentifier(R.mipmap.ic_launcher)
                                 .withTextColor(Settings.isNightMode?ContextCompat.getColor(this, R.color.white):ContextCompat.getColor(this,R.color.text_light))
                           ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -135,7 +135,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
                                    mSettings.putBoolean(mSettings.NIGHT_MODE, Settings.isNightMode);
                                    MainActivity.this.recreate();
                                    return false;
-                               case R.mipmap.ic_launcher:
+                            case R.mipmap.ic_launcher:
 
                                    showLangDialog();
                                    return false;

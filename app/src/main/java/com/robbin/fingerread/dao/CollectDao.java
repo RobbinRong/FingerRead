@@ -30,7 +30,8 @@ public class CollectDao {
         contentValues.put(DB.COLLECT_DAILY_IMAGE,detail.getImage());
         contentValues.put(DB.COLLECT_DAILY_IMAGESOURCE,detail.getImage_source());
         contentValues.put(DB.COLLECT_DAILY_BODY,detail.getBody());
-        database.insert(DB.TABLE_COLLECT_DAILY,null,contentValues);
+        long insert = database.insert(DB.TABLE_COLLECT_DAILY, null, contentValues);
+        Log.e("insert", "insertDaily: "+insert);
         database.close();
     }
     public void  insertScience(ArticleBean articleBean){
