@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">指读</string>
+    <string name="science">科学</string>
+    <string name="about">关于</string>
+    <string name="id_pos" translatable="false">position</string>
+    <string name="daily">日报</string>
+    <string name="text_noinfo">\n\n\n\n\t\t\t\t\t\t\t\t\t啊哦，这里没有信息</string>
+    <string name="text_pubdate">"Publish Date "</string>
+    <string name="text_price">"Price "</string>
+    <string name="id_category" translatable="false">category</string>
+    <string name="notify_remove_from_collection">Remove it from collection successful!!</string>
+    <string name="collection">收藏</string>
+    <string name="pages">Page　</string>
+    <string name="text_language">语言</string>
+    <string name="text_night_mode">夜间模式</string>
+    <string name="text_author">Author</string>
+    <string name="about_center">指读</string>
+    <string name="about_introduce">指读，指尖上的阅读体验。</string>
+    <string name="about_introduce_and_help">帮助</string>
+    <string name="about_developers">关于我</string>
+    <string name="me">荣先生</string>
+    <string name="load_fail">加载失败</string>
+    <string name="about_open_source_libraries_list">com.squareup.retrofit2:retrofit:2.0.0-beta4\ncom.squareup.okhttp3:okhttp:3.2.0\nio.reactivex:rxandroid:1.1.0\nio.reactivex:rxjava:1.1.0\ncom.facebook.stetho:stetho:1.3.1\ncom.jakewharton:butterknife:7.0.1\ncom.github.bumptech.glide:glide:3.7.0\ncom.yalantis:phoenix:1.2.3\norg.jsoup:jsoup:1.8.3</string>
+    <string name="about_function">已完成的功能</string>
+    <string name="about_open_source_lis">感谢</string>
+    <string name="collect">收藏</string>
+    <string name="user_ame">荣先生</string>
+    <string name="read">阅读</string>
+    <string name="user_email">rongjabin@gmail.com</string>
+    <string name="about_function_list">* 知乎日报、果壳网新闻、豆瓣图书数据显示\n* 以上三种详情页面展示\n* 错误界面处理\n* 上拉加载更多\n* 已读内容标记\n* 收藏功能 \n* 滑动返回\n* 分享功能\n* 夜间模式\n* 语言切换</string>
+
+    <string-array name="langs" translatable="false">
+        <item>English</item>
+        <item>简体中文</item>
+        <item>繁體中文</item>
+    </string-array>
+
+    <string-array name="search">
+        <item>@string/text_search_by_keyword</item>
+        <item>@string/text_search_by_category</item>
+    </string-array>
+
+    <string-array name="swipe_back">
+        <item>@string/text_anywhere</item>
+        <item>@string/text_left_only</item>
+    </string-array>
+
+    <string name="text_search_by_keyword">Search By Keyword</string>
+    <string name="text_search_by_category">Search By Category</string>
+
+    <string name="text_left_only">Left Only</string>
+    <string name="text_anywhere">Anywhere</string>
+
+    <string name="hint_share_to">分享到...</string>
+    <string name="text_share_from">"share from "</string>
+    <string name="notify_add_to_collection">add to collection successful</string>
+    <string name="text_hot"> hot </string>
+    <string name="text_day_mode">Day Mode</string>
+</resources>
