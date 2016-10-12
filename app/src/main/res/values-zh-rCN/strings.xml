@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">指读</string>
     <string name="science">科学</string>
+    <string name="wechat">微信</string>
     <string name="about">关于</string>
     <string name="id_pos" translatable="false">position</string>
     <string name="daily">日报</string>

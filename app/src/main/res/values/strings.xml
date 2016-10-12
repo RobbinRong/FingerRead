@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FingerRead</string>
     <string name="science">Science</string>
+    <string name="wechat">Wechat</string>
     <string name="about">About</string>
     <string name="id_pos" translatable="false">position</string>
     <string name="daily">Daily</string>

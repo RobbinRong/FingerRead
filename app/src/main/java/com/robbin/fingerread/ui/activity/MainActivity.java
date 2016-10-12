@@ -26,6 +26,7 @@ import com.robbin.fingerread.constant.Settings;
 import com.robbin.fingerread.ui.fragment.BaseCollectFragment;
 import com.robbin.fingerread.ui.fragment.BaseReadFragment;
 import com.robbin.fingerread.ui.fragment.BaseScienceFragment;
+import com.robbin.fingerread.ui.fragment.BaseWechatFragment;
 import com.robbin.fingerread.ui.fragment.DailyFragment;
 import com.robbin.fingerread.utils.Utils;
 
@@ -93,6 +94,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
                         new PrimaryDrawerItem().withName(R.string.daily).withIcon(R.mipmap.ic_home).withIdentifier(R.mipmap.ic_home).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.read).withIcon(R.mipmap.ic_reading).withIdentifier(R.mipmap.ic_reading).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.science).withIcon(R.mipmap.ic_science).withIdentifier(R.mipmap.ic_science).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
+                        new PrimaryDrawerItem().withName(R.string.wechat).withIcon(R.mipmap.ic_wechat).withIdentifier(R.mipmap.ic_wechat).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.collect).withIcon(R.mipmap.ic_collect_grey).withIdentifier(R.mipmap.ic_collect_grey).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.about).withIcon(R.mipmap.ic_about).withIdentifier(R.mipmap.ic_about).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new SectionDrawerItem().withName(R.string.app_name).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
@@ -120,6 +122,11 @@ public class MainActivity extends BaseActivityWithNoSwip {
                                 if (currentFragment instanceof BaseScienceFragment)
                                     return  false;
                                 currentFragment=new BaseScienceFragment();
+                                break;
+                             case R.mipmap.ic_wechat:
+                                   if (currentFragment instanceof BaseWechatFragment)
+                                       return  false;
+                                   currentFragment=new BaseWechatFragment();
                                 break;
                             case R.mipmap.ic_collect_grey:
                                 if (currentFragment instanceof BaseCollectFragment)
@@ -155,6 +162,9 @@ public class MainActivity extends BaseActivityWithNoSwip {
             switchFragment(currentFragment, getString(R.string.read));
         }else if(currentFragment instanceof BaseScienceFragment){
             switchFragment(currentFragment, getString(R.string.science));
+        }
+        else if(currentFragment instanceof BaseWechatFragment){
+            switchFragment(currentFragment, getString(R.string.wechat));
         }
         else if(currentFragment instanceof BaseCollectFragment){
             switchFragment(currentFragment, getString(R.string.collect));

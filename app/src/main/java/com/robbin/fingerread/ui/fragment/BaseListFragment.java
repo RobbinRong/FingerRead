@@ -32,6 +32,7 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
     RecyclerView.Adapter adapter;
     AutoLoadOnScrollListener autoLoadOnScrollListener;
     private int position;
+    private String category;
 
     @Override
     protected int getLayoutId() {
@@ -41,6 +42,7 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         position = getArguments().getInt(getString(R.string.id_pos));
+        category = getArguments().getSerializable(getString(R.string.id_category)).toString();
         refreshLayout.setOnRefreshListener(this);
         linearLayoutManager=new LinearLayoutManager(getActivity());
         recContent.setLayoutManager(linearLayoutManager);
@@ -48,7 +50,7 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
         recContent.setItemAnimator(new DefaultItemAnimator());
         adapter=initAdapter();
         recContent.setAdapter(adapter);
-        loadLatestNews(ScienceApi.channel_tag[position]);
+        loadLatestNews(category);
         autoLoadOnScrollListener=new AutoLoadOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
@@ -59,7 +61,7 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
         mTvLoadError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadLatestNews(ScienceApi.channel_tag[position]);
+                loadLatestNews(category);
             }
         });
 
@@ -73,7 +75,7 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
 
     @Override
     public void onRefresh() {
-        loadLatestNews(ScienceApi.channel_tag[position]);
+        loadLatestNews(category);
 
     }
     public void showProgress() {

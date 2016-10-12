@@ -26,7 +26,8 @@
         <activity android:name=".ui.activity.AboutActivity" />
         <activity android:name=".ui.activity.DailyDetailActivity" />
         <activity android:name=".ui.activity.ReadDetailActivity" />
-        <activity android:name=".ui.activity.ScienceDetailActivity"></activity>
+        <activity android:name=".ui.activity.ScienceDetailActivity" />
+        <activity android:name=".ui.activity.WechatDetailActivity"></activity>
     </application>
 
 </manifest>

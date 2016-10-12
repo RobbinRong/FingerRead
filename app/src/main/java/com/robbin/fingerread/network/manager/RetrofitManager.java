@@ -3,6 +3,8 @@ package com.robbin.fingerread.network.manager;
 import android.util.Log;
 
 import com.robbin.fingerread.FingerReadApplication;
+import com.robbin.fingerread.bean.WechatArticalBean;
+import com.robbin.fingerread.bean.WechatArticalCategoryBean;
 import com.robbin.fingerread.bean.NewsDetail;
 import com.robbin.fingerread.bean.NewsList;
 import com.robbin.fingerread.bean.ReadingBean;
@@ -10,9 +12,12 @@ import com.robbin.fingerread.bean.ScienceBean;
 import com.robbin.fingerread.constant.BaseUrl;
 import com.robbin.fingerread.network.service.ReadService;
 import com.robbin.fingerread.network.service.ScienceService;
+import com.robbin.fingerread.network.service.WechatService;
 import com.robbin.fingerread.network.service.ZhiHuRBService;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -42,7 +47,7 @@ public class RetrofitManager {
     private    ZhiHuRBService mZhihuService;
     private   ScienceService mScienceService;
     private ReadService mReadService;
-
+    private WechatService mWechatService;
     public static RetrofitManager builderZhiHu(){
         return new RetrofitManager(BaseUrl.BASE_ZHIHU_URL);
     }
@@ -51,6 +56,9 @@ public class RetrofitManager {
     }
     public static RetrofitManager builderRead(){
         return new RetrofitManager(BaseUrl.BASE_READ_URL);
+    }
+    public static RetrofitManager builderWechat(){
+        return new RetrofitManager(BaseUrl.BASE_WECHAT_URL);
     }
     private RetrofitManager(String baseUrl) {
         initOkHttpClient();
@@ -67,7 +75,9 @@ public class RetrofitManager {
         }
         else if(baseUrl.equals(BaseUrl.BASE_READ_URL)){
             mReadService=retrofit.create(ReadService.class);
-
+        }
+        else if(baseUrl.equals(BaseUrl.BASE_WECHAT_URL)){
+            mWechatService=retrofit.create(WechatService.class);
         }
     }
 
@@ -95,5 +105,17 @@ public class RetrofitManager {
     public Observable<NewsList> getBeforeNews(String date){return mZhihuService.getBeforeNews(date);}
     public Observable<ScienceBean> getScience(String key){Log.e("rjb", "getScience: "+key);return mScienceService.getScience("by_channel",key);}
     public Observable<ReadingBean> getBook(String tag){return mReadService.getBook(tag);}
+    public Observable<WechatArticalCategoryBean> getArticalCategory(){
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+        String d = format.format(date);
+        return mWechatService.getArticalCategory("19588",d,"d650ea2058644774a544a18430e8cedd");
+    }
+    public Observable<WechatArticalBean> getArticalList(int page,String typeid){
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+        String d = format.format(date);
+        return mWechatService.getArticalList("","0",String.valueOf(page),"19588",d,typeid,"d650ea2058644774a544a18430e8cedd");
+    }
 
 }

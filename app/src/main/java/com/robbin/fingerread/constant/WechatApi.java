@@ -20,9 +20,10 @@
 package com.robbin.fingerread.constant;
 
 
-public class ScienceApi {
-    public static String [] channel_tag={"hot","frontier","review","interview","visual","brief","fact","techb"};
-    public static String [] channel_title={"热点","前沿","评论","专访","视觉","速读","谣言粉碎机","商业科技"};
-    public static String science_channel_url="http://www.guokr.com/apis/minisite/article.json?retrieve_type=by_channel&channel_key=";
+public class WechatApi {
+    public static String [] category_id={"19","2","3","4","5","6","7","8","9",
+            "10","11","12","13","14","15","16","17","18","1","0"};
+    public static String [] artical_category={"体育迷","段子手","养生堂","私房话","八卦精","爱生活","财经迷","汽车迷","科技咖",
+            "潮人帮","辣妈帮","点赞党","旅行家","职场人","美食家","古今通","学霸族","星座控","推荐","热点"};
 
 }

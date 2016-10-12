@@ -24,12 +24,7 @@ import com.robbin.fingerread.FingerReadApplication;
 import com.robbin.fingerread.R;
 import com.robbin.fingerread.bean.BookBean;
 
-/**
- * Created by mummyding on 2015-11-15.<br>
- * DouBan(www.douban.com) Books Api
- * @author MummyDing
- * @version 1.0
- */
+
 public class ReadingApi {
     public static final int TAG_LEN = 3;
     public static String searchByTag="http://api.douban.com/v2/book/search?tag=";
