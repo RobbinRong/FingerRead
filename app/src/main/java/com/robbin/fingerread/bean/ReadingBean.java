@@ -20,6 +20,7 @@
 package com.robbin.fingerread.bean;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Created by mummyding on 15-11-15.<br>
@@ -36,5 +37,12 @@ public class ReadingBean implements Serializable{
 
     public void setBooks(BookBean[] books) {
         this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "ReadingBean{" +
+                "books=" + Arrays.toString(books) +
+                '}';
     }
 }

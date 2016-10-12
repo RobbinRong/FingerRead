@@ -110,4 +110,12 @@ public class CollectDao {
         database.execSQL("delete  from "+DB.TABLE_COLLECT_SCIENCE+" where "+DB.COLLECT_SCIENCE_URL+"='"+articleBean.getUrl()+"'");
         database.close();
     }
+
+    public void insertWechat(String url) {
+
+    }
+
+    public void deleteWechat(String url) {
+
+    }
 }

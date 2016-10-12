@@ -1,6 +1,7 @@
 package com.robbin.fingerread.ui.fragment;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.robbin.fingerread.adapter.ReadAdapter;
@@ -42,6 +43,7 @@ public class ReadFragment extends BaseListFragment {
         }).subscribe(new Action1<ReadingBean>() {
             @Override
             public void call(ReadingBean readingBean) {
+                Log.e(TAG, "call: "+readingBean.toString());
                 hideProgress();
                 adapter.change(readingBean);
                 refreshLayout.setRefreshing(false);

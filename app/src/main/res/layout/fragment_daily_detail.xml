@@ -55,7 +55,7 @@
                     android:padding="@dimen/spacing_large"
                     android:textColor="@android:color/white"
                     android:textSize="22sp"
-                    tools:text="@string/test_title" />
+                    tools:text="test_title" />
 
                 <TextView
                     android:id="@+id/tv_source"
@@ -65,7 +65,7 @@
                     android:padding="@dimen/spacing_medium"
                     android:textColor="@color/color_source"
                     android:textSize="@dimen/source_font_size"
-                    tools:text="@string/test_source" />
+                    tools:text="test_source" />
             </FrameLayout>
 
             <include layout="@layout/include_toolbar" />

@@ -103,7 +103,7 @@ public class RetrofitManager {
     }
     public Observable<NewsDetail> getNewsDetail(int id){return  mZhihuService.getNewsDetail(id);}
     public Observable<NewsList> getBeforeNews(String date){return mZhihuService.getBeforeNews(date);}
-    public Observable<ScienceBean> getScience(String key){Log.e("rjb", "getScience: "+key);return mScienceService.getScience("by_channel",key);}
+    public Observable<ScienceBean> getScience(String key){return mScienceService.getScience("by_channel",key);}
     public Observable<ReadingBean> getBook(String tag){return mReadService.getBook(tag);}
     public Observable<WechatArticalCategoryBean> getArticalCategory(){
         Date date = new Date();

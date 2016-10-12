@@ -32,6 +32,7 @@ public class WechatFragment extends  BaseListFragment {
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
+                        mTvLoadError.setVisibility(View.GONE);
                         showProgress();
                     }
                 }).subscribe(new Action1<WechatArticalBean>() {
