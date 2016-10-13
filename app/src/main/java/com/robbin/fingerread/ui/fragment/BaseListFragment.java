@@ -54,7 +54,7 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
         autoLoadOnScrollListener=new AutoLoadOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-            loadMore();
+            loadMore(currentPage,category);
             }
         };
         recContent.addOnScrollListener(autoLoadOnScrollListener);
@@ -67,7 +67,7 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
 
     }
 
-    protected abstract void loadMore();
+    protected abstract void loadMore(int currentPage,String tag);
 
     protected abstract void loadLatestNews(String tag);
 

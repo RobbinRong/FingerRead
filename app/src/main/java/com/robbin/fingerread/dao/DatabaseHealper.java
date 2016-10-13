@@ -32,6 +32,7 @@ public class DatabaseHealper extends SQLiteOpenHelper{
         db.execSQL(DB.CREATE_TABLE_READ);
         db.execSQL(DB.CREATE_TABLE_COLLECT_DAILY);
         db.execSQL(DB.CREATE_TABLE_COLLECT_SCIENCE);
+        db.execSQL(DB.CREATE_TABLE_COLLECT_WECHAT);
 
     }
 

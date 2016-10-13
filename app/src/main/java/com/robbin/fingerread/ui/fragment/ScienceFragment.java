@@ -24,7 +24,7 @@ public class ScienceFragment extends BaseListFragment {
     private ScienceAdapter adapter;
 
     @Override
-    protected void loadMore() {
+    protected void loadMore(int currentPage,String tag) {
 
     }
 

@@ -79,6 +79,11 @@ public class WechatAdapter extends  RecyclerView.Adapter<WechatAdapter.WechatHol
         this.notifyDataSetChanged();
     }
 
+    public void append(WechatArticalBean wechatArticalBean) {
+        this.wechatArticalBean.showapi_res_body.pagebean.contentlist.addAll(wechatArticalBean.showapi_res_body.pagebean.contentlist);
+        this.notifyDataSetChanged();
+    }
+
     class WechatHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.userLogo)
         ImageView userLogo;

@@ -17,10 +17,13 @@ import android.widget.LinearLayout;
 
 import com.robbin.fingerread.FingerReadApplication;
 import com.robbin.fingerread.R;
+import com.robbin.fingerread.bean.NewsDetail;
 import com.robbin.fingerread.bean.WechatArticalBean;
 import com.robbin.fingerread.constant.BaseUrl;
 import com.robbin.fingerread.dao.CollectDao;
 import com.robbin.fingerread.ui.activity.WechatDetailActivity;
+
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -44,7 +47,6 @@ public class WechatDetailFragment extends  BaseFragment{
         Fragment fragment = new WechatDetailFragment();
         fragment.setArguments(bundle);
         return fragment;
-
     }
 
     @Override
@@ -69,14 +71,19 @@ public class WechatDetailFragment extends  BaseFragment{
     private void init() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(mToolbar);
-
         ActionBar supportActionBar = activity.getSupportActionBar();
         if(supportActionBar!=null){
-
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             supportActionBar.setTitle(content.title);
         }
         dao=new CollectDao(FingerReadApplication.AppContext);
+        WechatArticalBean wechatArticalBean = dao.getAllWechat();
+        for(WechatArticalBean.Content c:wechatArticalBean.showapi_res_body.pagebean.contentlist){
+            if(c.id==content.id){
+                isCollected=true;
+                break;
+            }
+        }
     }
 
     @Override
@@ -123,11 +130,11 @@ public class WechatDetailFragment extends  BaseFragment{
     }
 
     private void addToCollection() {
-        dao.insertWechat(content.url);
+        dao.insertWechat(content);
     }
 
     private void removeFromCollection() {
-        dao.deleteWechat(content.url);
+        dao.deleteWechat(content);
     }
 
     private void share() {

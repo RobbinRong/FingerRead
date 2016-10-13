@@ -27,10 +27,14 @@ public class BaseCollectFragment extends TopNavigationFragment {
                 }else if(position==2){
                     fragment = new CollectScienceFragment();
                 }
+                else if(position==3){
+                    fragment = new CollectWechatFragment();
+                }
                 Bundle bundle = new Bundle();
                 bundle.putInt(getString(R.string.id_pos),position);
                 fragment.setArguments(bundle);
-                return fragment;                }
+                return fragment;
+            }
         };
         return pagerAdapter;
     }

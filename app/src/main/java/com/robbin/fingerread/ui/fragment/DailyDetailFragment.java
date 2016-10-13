@@ -81,9 +81,9 @@ public class DailyDetailFragment extends BaseFragment{
     }
 
     public void loadSucess(NewsDetail detail){
-        List<NewsDetail> allDaily = dao.getAllDaily();
-        for(NewsDetail detail1:allDaily){
-            if(detail1.getId()==detail.getId()){
+        List<NewsDetail> allDaily = dao.getAllDaily();//同步的时候，也就是detail有值，在收藏里面才能修改成功。
+        for(NewsDetail detail1:allDaily){           // 否则异步的话都已经创建完了menu在修改iscollect也没有意义了
+            if(detail1.getId()==detail.getId()){  //还有效率问题，把所有收藏的都读出来在一个个的判断效率太低了。
                 isCollected=true;
                 break;
             }
@@ -149,6 +149,7 @@ public class DailyDetailFragment extends BaseFragment{
         }
         mCollapsingToolbarLayout.setTitleEnabled(true);
         dao=new CollectDao(FingerReadApplication.AppContext);
+
     }
 
     @Override

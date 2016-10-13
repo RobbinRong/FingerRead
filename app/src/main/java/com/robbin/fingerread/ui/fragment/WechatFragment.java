@@ -20,13 +20,17 @@ import rx.schedulers.Schedulers;
 public class WechatFragment extends  BaseListFragment {
     private WechatAdapter adapter;
     @Override
-    protected void loadMore() {
-
+    protected void loadMore(int currentPage,String tag) {
+        getDataFromHttp(currentPage,tag,true);
     }
 
     @Override
     protected void loadLatestNews(String tag) {
-        RetrofitManager.builderWechat().getArticalList(1,tag)
+       getDataFromHttp(1,tag,false);
+    }
+
+    private void getDataFromHttp(int page, String tag, final boolean ismore){
+        RetrofitManager.builderWechat().getArticalList(page,tag)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(new Action0() {
@@ -39,7 +43,12 @@ public class WechatFragment extends  BaseListFragment {
             @Override
             public void call(WechatArticalBean wechatArticalBean) {
                 hideProgress();
-                adapter.change(wechatArticalBean);
+                if(!ismore){
+                    adapter.change(wechatArticalBean);
+                }
+                else {
+                    adapter.append(wechatArticalBean);
+                }
                 refreshLayout.setRefreshing(false);
                 mTvLoadError.setVisibility(View.GONE);
             }
@@ -51,9 +60,7 @@ public class WechatFragment extends  BaseListFragment {
                 mTvLoadError.setVisibility(View.VISIBLE);
             }
         });
-
     }
-
     @Override
     public RecyclerView.Adapter initAdapter() {
         adapter=new WechatAdapter(new WechatArticalBean(),getActivity());

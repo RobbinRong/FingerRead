@@ -21,7 +21,7 @@ public class ReadFragment extends BaseListFragment {
     private ReadAdapter adapter;
 
     @Override
-    protected void loadMore() {
+    protected void loadMore(int currentPage,String tag) {
 
     }
 
