@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -79,7 +80,7 @@ public class WechatDetailFragment extends  BaseFragment{
         dao=new CollectDao(FingerReadApplication.AppContext);
         WechatArticalBean wechatArticalBean = dao.getAllWechat();
         for(WechatArticalBean.Content c:wechatArticalBean.showapi_res_body.pagebean.contentlist){
-            if(c.id==content.id){
+            if(c.title.equals(content.title)){
                 isCollected=true;
                 break;
             }

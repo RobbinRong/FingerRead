@@ -9,7 +9,7 @@
     <string name="text_pubdate">"Publish Date "</string>
     <string name="text_price">"Price "</string>
     <string name="id_category" translatable="false">category</string>
-    <string name="notify_remove_from_collection">Remove it from collection successful!!</string>
+    <string name="notify_remove_from_collection">已从收藏夹移除</string>
     <string name="collection">收藏</string>
     <string name="pages">Page　</string>
     <string name="text_language">语言</string>
@@ -54,7 +54,7 @@
 
     <string name="hint_share_to">分享到...</string>
     <string name="text_share_from">"share from "</string>
-    <string name="notify_add_to_collection">add to collection successful</string>
+    <string name="notify_add_to_collection">已添加到收藏夹</string>
     <string name="text_hot"> hot </string>
     <string name="text_day_mode">Day Mode</string>
 </resources>
