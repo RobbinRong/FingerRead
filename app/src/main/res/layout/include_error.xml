@@ -12,6 +12,7 @@
         android:drawablePadding="10dp"
         android:drawableTop="@drawable/ic_error"
         android:scaleType="centerInside"
+        android:text="@string/load_fail"
         android:visibility="gone"
-        android:text="@string/load_fail"/>
+        android:gravity="center"/>
 </merge>
