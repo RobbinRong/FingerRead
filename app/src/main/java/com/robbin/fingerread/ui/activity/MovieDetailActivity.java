@@ -2,10 +2,14 @@ package com.robbin.fingerread.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,6 +53,11 @@ public class MovieDetailActivity extends BaseActivity {
     TextView tvDra;
     @Bind(R.id.lv_commons)
     ListView lvCommons;
+    @Bind(R.id.iv_play)
+    ImageView ivPlay;
+    @Bind(R.id.fl_img)
+    FrameLayout flImg;
+    private MovieDetail movieDetail;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_movie_detail;
@@ -57,7 +66,11 @@ public class MovieDetailActivity extends BaseActivity {
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         movieId = getIntent().getStringExtra(KEY_MOVIE_DETAIL);
-
+        setSupportActionBar(toolbar);
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         getDataFromHttp();
 
     }
@@ -79,11 +92,22 @@ public class MovieDetailActivity extends BaseActivity {
     }
 
     private void loadData(MovieDetail detail) {
-        MovieDetail.MovieDetailModel detailModel=detail.data.MovieDetailModel;
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setTitle(detail.data.MovieDetailModel.nm);
+        }
+        final MovieDetail.MovieDetailModel detailModel=detail.data.MovieDetailModel;
         Glide.with(this).load(detailModel.img).placeholder(R.drawable.ic_gaoyuanyuan).into(ivImg);
         tvNm.setText(detailModel.nm);
         tvCat.setText(detailModel.cat);
-        tvDra.setText(detailModel.dra);
+        String dra="";
+        if(detailModel.dra.startsWith("<p>")){
+            dra=detailModel.dra.replace("<p>","");
+        }
+        if(detailModel.dra.endsWith("</p>")){
+            dra=dra.replace("</p>","");
+        }
+        tvDra.setText(dra);
         tvDur.setText(" /"+detailModel.dur+"分钟");
         tvRt.setText(detailModel.rt);
         tvSc.setText(String.valueOf(detailModel.sc));
@@ -96,7 +120,28 @@ public class MovieDetailActivity extends BaseActivity {
         }
         tvSrc.setText(detailModel.src);
         tvWish.setText(detailModel.wish+"");
+        if(!detailModel.vd.isEmpty()){
+            flImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MovieVDDetailActivity.start(MovieDetailActivity.this,detailModel.vd);
+                }
+            });
+        }
+        else {
+            ivPlay.setVisibility(View.INVISIBLE);
 
+        }
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.onBackPressed();
+                return true;
+            default:return false;
+        }
     }
 
     public static  void start(Context context, String id){

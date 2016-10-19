@@ -21,13 +21,25 @@
         android:orientation="horizontal"
         android:id="@+id/rl_item"
         >
-        <ImageView
-            android:id="@+id/iv_img"
-            android:layout_width="71dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_gaoyuanyuan"
-            />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="71dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_gaoyuanyuan"
+                />
+      <!--      <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/iv_play"
+                android:layout_gravity="center"
+                android:src="@drawable/play"
+                />-->
+        </FrameLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
