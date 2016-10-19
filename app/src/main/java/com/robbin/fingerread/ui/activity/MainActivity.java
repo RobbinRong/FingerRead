@@ -24,6 +24,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.robbin.fingerread.R;
 import com.robbin.fingerread.constant.Settings;
 import com.robbin.fingerread.ui.fragment.BaseCollectFragment;
+import com.robbin.fingerread.ui.fragment.BaseFragment;
+import com.robbin.fingerread.ui.fragment.BaseMovieFragment;
 import com.robbin.fingerread.ui.fragment.BaseReadFragment;
 import com.robbin.fingerread.ui.fragment.BaseScienceFragment;
 import com.robbin.fingerread.ui.fragment.BaseWechatFragment;
@@ -114,9 +116,9 @@ public class MainActivity extends BaseActivityWithNoSwip {
                                 currentFragment=new DailyFragment();
                                 break;
                             case R.mipmap.ic_reading:
-                                if (currentFragment instanceof BaseReadFragment)
+                                if (currentFragment instanceof BaseMovieFragment)
                                     return  false;
-                                currentFragment=new BaseReadFragment();
+                                currentFragment=new BaseMovieFragment();
                                 break;
                             case R.mipmap.ic_science:
                                 if (currentFragment instanceof BaseScienceFragment)
@@ -158,7 +160,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
     private void switchFragment() {
         if(currentFragment instanceof DailyFragment){
             switchFragment(currentFragment, getString(R.string.daily));
-        }else if(currentFragment instanceof BaseReadFragment){
+        }else if(currentFragment instanceof BaseMovieFragment){
             switchFragment(currentFragment, getString(R.string.read));
         }else if(currentFragment instanceof BaseScienceFragment){
             switchFragment(currentFragment, getString(R.string.science));

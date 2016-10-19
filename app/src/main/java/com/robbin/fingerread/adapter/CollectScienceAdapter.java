@@ -67,7 +67,7 @@ public class CollectScienceAdapter extends  RecyclerView.Adapter<CollectScienceA
         @Bind(R.id.cv_item)
         CardView mCvItem;
 
-        @Bind(R.id.iv_news)
+        @Bind(R.id.iv_img)
         ImageView mIvNews;
 
         @Bind(R.id.tv_title)

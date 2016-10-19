@@ -41,8 +41,10 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-        position = getArguments().getInt(getString(R.string.id_pos));
-        category = getArguments().getSerializable(getString(R.string.id_category)).toString();
+        if(getArguments()!=null){
+            position = getArguments().getInt(getString(R.string.id_pos));
+            category = getArguments().getSerializable(getString(R.string.id_category)).toString();
+        }
         refreshLayout.setOnRefreshListener(this);
         linearLayoutManager=new LinearLayoutManager(getActivity());
         recContent.setLayoutManager(linearLayoutManager);
