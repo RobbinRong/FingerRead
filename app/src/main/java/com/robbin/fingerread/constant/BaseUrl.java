@@ -9,5 +9,6 @@ public class BaseUrl {
     public static final String BASE_READ_URL = "http://api.douban.com/v2/book/";
     public static final String BASE_WECHAT_URL = "https://route.showapi.com/";
     public static final String BASE_MOVIE_URL = "http://m.maoyan.com/movie/";
+    public static final String BASE_MAOYAN_URL = "http://api.maoyan.com/";
 
 }

@@ -23,4 +23,5 @@ public interface MovieService {
     @GET("{id}.json")
     public Observable<MovieDetail> getMovieDetail(@Path("id")String id);
 
+
 }

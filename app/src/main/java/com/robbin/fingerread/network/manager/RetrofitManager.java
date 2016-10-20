@@ -4,7 +4,9 @@ import android.util.Log;
 
 import com.robbin.fingerread.FingerReadApplication;
 import com.robbin.fingerread.bean.MovieBean;
+import com.robbin.fingerread.bean.MovieCelebrity;
 import com.robbin.fingerread.bean.MovieDetail;
+import com.robbin.fingerread.bean.MovieMajor;
 import com.robbin.fingerread.bean.WechatArticalBean;
 import com.robbin.fingerread.bean.WechatArticalCategoryBean;
 import com.robbin.fingerread.bean.NewsDetail;
@@ -12,6 +14,7 @@ import com.robbin.fingerread.bean.NewsList;
 import com.robbin.fingerread.bean.ReadingBean;
 import com.robbin.fingerread.bean.ScienceBean;
 import com.robbin.fingerread.constant.BaseUrl;
+import com.robbin.fingerread.network.service.MaoYanService;
 import com.robbin.fingerread.network.service.MovieService;
 import com.robbin.fingerread.network.service.ReadService;
 import com.robbin.fingerread.network.service.ScienceService;
@@ -53,6 +56,7 @@ public class RetrofitManager {
     private ReadService mReadService;
     private WechatService mWechatService;
     private MovieService mMovieService;
+    private MaoYanService mMaoYanService;
     public static RetrofitManager builderZhiHu(){
         return new RetrofitManager(BaseUrl.BASE_ZHIHU_URL);
     }
@@ -68,6 +72,10 @@ public class RetrofitManager {
     public static RetrofitManager builderMovie(){
         return new RetrofitManager(BaseUrl.BASE_MOVIE_URL);
     }
+    public static RetrofitManager builderMaoYan(){
+        return new RetrofitManager(BaseUrl.BASE_MAOYAN_URL);
+    }
+
     private RetrofitManager(String baseUrl) {
         initOkHttpClient();
         Retrofit retrofit=new Retrofit.Builder().baseUrl(baseUrl).
@@ -89,6 +97,9 @@ public class RetrofitManager {
         }
         else if(baseUrl.equals(BaseUrl.BASE_MOVIE_URL)){
             mMovieService=retrofit.create(MovieService.class);
+        }
+        else if(baseUrl.equals(BaseUrl.BASE_MAOYAN_URL)){
+            mMaoYanService=retrofit.create(MaoYanService.class);
         }
     }
 
@@ -128,10 +139,10 @@ public class RetrofitManager {
         String d = format.format(date);
         return mWechatService.getArticalList("","0",String.valueOf(page),"19588",d,typeid,"d650ea2058644774a544a18430e8cedd");
     }
-    public Observable<MovieBean> getMovies(String type, String offset,String limit){
-        return mMovieService.getMovies(type,offset,limit);
-    }
-    public Observable<MovieDetail> getMovieDetail(String id){
-        return mMovieService.getMovieDetail(id);
+    public Observable<MovieBean> getMovies(String type, String offset,String limit){return mMovieService.getMovies(type,offset,limit);}
+    public Observable<MovieDetail> getMovieDetail(String id){return mMovieService.getMovieDetail(id);}
+    public Observable<MovieCelebrity> getMovieCelebrity(String id){return mMaoYanService.getMovieCelebrity(id);}
+    public Observable<MovieMajor> getMovieMajor(String id){
+        return mMaoYanService.getMovieMajor(id);
     }
 }

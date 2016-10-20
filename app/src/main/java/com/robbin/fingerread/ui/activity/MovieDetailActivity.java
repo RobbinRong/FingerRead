@@ -7,24 +7,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.robbin.fingerread.R;
+import com.robbin.fingerread.bean.MovieCelebrity;
 import com.robbin.fingerread.bean.MovieDetail;
+import com.robbin.fingerread.bean.MovieMajor;
 import com.robbin.fingerread.network.manager.RetrofitManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class MovieDetailActivity extends BaseActivity {
+public class MovieDetailActivity extends BaseActivity implements View.OnClickListener{
     public static  final  String KEY_MOVIE_DETAIL="moviedetailactivity";
     public static  final  String TAG="moviedetailactivity";
     private String movieId;
@@ -57,7 +66,29 @@ public class MovieDetailActivity extends BaseActivity {
     ImageView ivPlay;
     @Bind(R.id.fl_img)
     FrameLayout flImg;
+    @Bind(R.id.ll_celebrity)
+    LinearLayout llCelebrity;
+    @Bind(R.id.imb_show_all)
+    ImageView imbShowAll;
+    @Bind(R.id.im_show_major_all)
+    ImageView imShowMajorAll;
+    @Bind(R.id.iv_major)
+    ImageView imMajor;
+    @Bind(R.id.tv_major_name)
+    TextView tvMajorName;
+    @Bind(R.id.tv_major_content)
+    TextView tvMajorContent;
+    @Bind(R.id.tv_major_approve)
+    TextView tvApprove;
     private MovieDetail movieDetail;
+
+    private int maxLines;
+    private int maxLinesMajor;
+    private boolean isShowAll=false;
+    private boolean isShowAllMajor=false;
+    private static final int MAX = 3;//初始maxLine大小
+    private static final int MAXMAJOR = 2;//初始maxLine大小
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_movie_detail;
@@ -72,7 +103,8 @@ public class MovieDetailActivity extends BaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         getDataFromHttp();
-
+        imShowMajorAll.setOnClickListener(this);
+        imbShowAll.setOnClickListener(this);
     }
 
     private void getDataFromHttp() {
@@ -89,10 +121,74 @@ public class MovieDetailActivity extends BaseActivity {
                         Log.e(TAG, "call: "+throwable.getMessage());
                     }
                 });
+        RetrofitManager.builderMaoYan().getMovieCelebrity(movieId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<MovieCelebrity>() {
+                    @Override
+                    public void call(MovieCelebrity celebrity) {
+                        loadCelebrity(celebrity);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, "call: "+throwable.getMessage());
+                    }
+                });
+        RetrofitManager.builderMaoYan().getMovieMajor(movieId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<MovieMajor>() {
+                    @Override
+                    public void call(MovieMajor major) {
+                        loadMajor(major);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, "call: "+throwable.getMessage());
+                    }
+                });
     }
 
+    private void loadMajor(MovieMajor major) {
+        MovieMajor.Major m = major.data.major.get(0);
+        if(null!=m){
+            Glide.with(this).load(m.avatarurl).placeholder(R.drawable.ic_placeholder).into(imMajor);
+            tvMajorName.setText(m.nickName);
+            tvMajorContent.setText(m.content);
+            maxLinesMajor=tvMajorContent.getLineCount();
+            tvMajorContent.setMaxLines(MAXMAJOR);
+            tvApprove.setText(m.approve);
+        }
+    }
+
+    private void loadCelebrity(MovieCelebrity celebrity) {
+            MovieCelebrity mc=new MovieCelebrity();
+            List<MovieCelebrity.Data> datas= new ArrayList<MovieCelebrity.Data>();
+            for (int i=0;i<celebrity.data.size();i++){
+            for(int j=0;j<celebrity.data.get(i).size();j++){
+                datas.add(celebrity.data.get(i).get(j));
+            }
+        }
+        for(int i=0;i<datas.size();i++){
+            if(!datas.get(i).still.isEmpty()){
+                View view= LayoutInflater.from(this).inflate(R.layout.celebrity_item,null,false);
+                ImageView ivCelebrity= (ImageView) view.findViewById(R.id.iv_celebrity);
+                TextView tvCelebrityName= (TextView) view.findViewById(R.id.tv_celebrity_name);
+                TextView tvCelebrityJueSe= (TextView) view.findViewById(R.id.tv_celebrity_juese);
+                MovieCelebrity.Data d=datas.get(i);
+                Glide.with(this).load(d.still).placeholder(R.drawable.ic_placeholder).into(ivCelebrity);
+                tvCelebrityName.setText(d.cnm);
+                tvCelebrityJueSe.setText("饰 "+d.roles);
+                llCelebrity.addView(view);
+            }
+
+        }
+
+
+    }
     private void loadData(MovieDetail detail) {
         ActionBar actionBar=getSupportActionBar();
+
         if(actionBar!=null){
             actionBar.setTitle(detail.data.MovieDetailModel.nm);
         }
@@ -108,6 +204,9 @@ public class MovieDetailActivity extends BaseActivity {
             dra=dra.replace("</p>","");
         }
         tvDra.setText(dra);
+        maxLines=tvDra.getLineCount();
+        tvDra.setMaxLines(MAX);
+        Log.e(TAG, "loadData: linecount"+tvDra.getLineCount()+"line height"+tvDra.getLineHeight());
         tvDur.setText(" /"+detailModel.dur+"分钟");
         tvRt.setText(detailModel.rt);
         tvSc.setText(String.valueOf(detailModel.sc));
@@ -149,5 +248,53 @@ public class MovieDetailActivity extends BaseActivity {
         intent.putExtra(KEY_MOVIE_DETAIL,id);
         context.startActivity(intent);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.imb_show_all:
+                toggle();
+                break;
+            case R.id.im_show_major_all:
+                toggleMajor();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void toggleMajor() {
+        if(!isShowAllMajor){
+            isShowAllMajor=!isShowAllMajor;
+            imShowMajorAll.setImageResource(R.drawable.ic_find_previous_holo_light);
+            tvMajorContent.setMaxLines(maxLinesMajor);
+            tvMajorContent.postInvalidate();
+        }
+        else {
+            isShowAllMajor=!isShowAllMajor;
+            imShowMajorAll.setImageResource(R.drawable.ic_find_next_holo_light);
+            tvMajorContent.setMaxLines(MAXMAJOR);
+            tvMajorContent.postInvalidate();
+
+        }
+    }
+
+    public void toggle(){
+        if(!isShowAll){
+            isShowAll=!isShowAll;
+            imbShowAll.setImageResource(R.drawable.ic_find_previous_holo_light);
+            tvDra.setMaxLines(maxLines);
+            tvDra.postInvalidate();
+        }
+        else {
+            isShowAll=!isShowAll;
+            imbShowAll.setImageResource(R.drawable.ic_find_next_holo_light);
+            tvDra.setMaxLines(MAX);
+            tvDra.postInvalidate();
+
+        }
     }
 }
