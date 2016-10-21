@@ -10,17 +10,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.robbin.fingerread.R;
+import com.robbin.fingerread.adapter.MovieCommonZYAdapter;
+import com.robbin.fingerread.bean.MovieBox;
 import com.robbin.fingerread.bean.MovieCelebrity;
+import com.robbin.fingerread.bean.MovieCommonsZY;
 import com.robbin.fingerread.bean.MovieDetail;
 import com.robbin.fingerread.bean.MovieMajor;
 import com.robbin.fingerread.network.manager.RetrofitManager;
@@ -60,8 +67,8 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
     Toolbar toolbar;
     @Bind(R.id.tv_dra)
     TextView tvDra;
-    @Bind(R.id.lv_commons)
-    ListView lvCommons;
+    //@Bind(R.id.lv_commons_zhuanye)
+    //ListView lvCommonsZY;
     @Bind(R.id.iv_play)
     ImageView ivPlay;
     @Bind(R.id.fl_img)
@@ -80,6 +87,20 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvMajorContent;
     @Bind(R.id.tv_major_approve)
     TextView tvApprove;
+    @Bind(R.id.tv_box)
+    TextView tvBox;
+    @Bind(R.id.ll_box)
+    LinearLayout llBox;
+    @Bind(R.id.tv_box_last_day_rank)
+    TextView tvRank;
+    @Bind(R.id.tv_box_frist_week)
+    TextView tvFirstWeek;
+    @Bind(R.id.tv_sum_box)
+    TextView tvSumBox;
+    @Bind(R.id.zy_1)
+    View viewZY1;
+    @Bind(R.id.rl_commentZY)
+    RelativeLayout rlCommentZY;
     private MovieDetail movieDetail;
 
     private int maxLines;
@@ -105,6 +126,7 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
         getDataFromHttp();
         imShowMajorAll.setOnClickListener(this);
         imbShowAll.setOnClickListener(this);
+        rlCommentZY.setOnClickListener(this);
     }
 
     private void getDataFromHttp() {
@@ -118,7 +140,7 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "call: "+throwable.getMessage());
+                        Log.e(TAG, "calldata: "+throwable.getMessage());
                     }
                 });
         RetrofitManager.builderMaoYan().getMovieCelebrity(movieId).subscribeOn(Schedulers.io())
@@ -131,7 +153,7 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "call: "+throwable.getMessage());
+                        Log.e(TAG, "callcelebrity: "+throwable.getMessage());
                     }
                 });
         RetrofitManager.builderMaoYan().getMovieMajor(movieId).subscribeOn(Schedulers.io())
@@ -144,9 +166,86 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e(TAG, "call: "+throwable.getMessage());
+                        Log.e(TAG, "callmajor: "+throwable.getMessage());
                     }
                 });
+        RetrofitManager.builderMaoYan().getMovieBox(movieId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<MovieBox>() {
+                    @Override
+                    public void call(MovieBox box) {
+                        loadBox(box);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, "callbox: "+throwable.getMessage());
+                    }
+                });
+        RetrofitManager.builderMaoYan().getMoviCommosZY(movieId,0,1).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<MovieCommonsZY>() {
+                    @Override
+                    public void call(MovieCommonsZY commonZY) {
+                        loadCommonZY(commonZY);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, "callzy: "+throwable.getMessage());
+                    }
+                });
+    }
+
+    private void loadCommonZY(MovieCommonsZY commonZY) {
+        List<MovieCommonsZY.Data> data = commonZY.data;
+        l(viewZY1,data.get(0));
+        // lvCommonsZY.setAdapter(new MovieCommonZYAdapter(commonZY,this));
+        //setListViewHeightBasedOnChildren(lvCommonsZY);
+
+    }
+    private  void l(View view,MovieCommonsZY.Data data){
+        Log.e(TAG, "l: "+data);
+       com.makeramen.roundedimageview.RoundedImageView userLogo= (RoundedImageView) view.findViewById(R.id.iv_zy);
+       TextView tvName= (TextView) view.findViewById(R.id.tv_name);
+       TextView tvAuthinfo = (TextView) view.findViewById(R.id.tv_authinfo);
+       TextView tvScore=(TextView) view.findViewById(R.id.tv_score);
+       TextView tvContent= (TextView) view.findViewById(R.id.tv_content);
+       TextView tvDate=(TextView) view.findViewById(R.id.tv_date);
+       TextView tvAprove= (TextView) view.findViewById(R.id.tv_common_approve);
+       Glide.with(this).load(data.avatarurl).placeholder(R.drawable.ic_placeholder).into(userLogo);
+       tvName.setText(data.nickName);
+       tvAuthinfo.setText(data.authInfo);
+       tvScore.setText(data.score*2+"");
+       tvContent.setText(data.content);
+       tvDate.setText(data.startTime);
+       tvAprove.setText(data.approve);
+
+    }
+/*    private void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter(); //获得Adapter
+        if (listAdapter == null) {  //判断是否为空
+            return;
+        }
+        int totalHeight = 0;  //定义总高度
+        //根据listAdapter.getCount()获取当前拥有多少个item项，然后进行遍历对每一个item获取高度再相加最终获得总的高度。
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        //获取到list的布局属性
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        //listview最终高度为item的高度+分隔线的高度，这是重新设置listview的属性
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//将重新设置的params再应用到listview中
+        listView.setLayoutParams(params);
+    }*/
+    private void loadBox(MovieBox box) {
+        MovieBox.Mbox mbox = box.mbox;
+        tvRank.setText(mbox.lastDayRank+"");
+        tvFirstWeek.setText(mbox.firstWeekBox+"");
+        tvSumBox.setText(mbox.sumBox+"");
     }
 
     private void loadMajor(MovieMajor major) {
@@ -259,6 +358,9 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.im_show_major_all:
                 toggleMajor();
+                break;
+            case R.id.rl_commentZY:
+
                 break;
             default:
                 break;

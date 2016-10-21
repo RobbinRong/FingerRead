@@ -326,15 +326,111 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_marginTop="10dp"
-                android:text="短评"/>
-            <ListView
+                android:id="@+id/tv_box"
+                android:textSize="18sp"
+                android:text="票房"
+                />
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/lv_commons"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/ll_box">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_box_last_day_rank"
+                        android:textSize="20sp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="#f00"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="昨日票房排行"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_box_frist_week"
+                        android:textSize="20sp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="#f00"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="首周票房(万)"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_sum_box"
+                        android:textSize="20sp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="#f00"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="累计票房(万)"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:src="@drawable/item_divide"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/rl_commentZY"
                 >
-            </ListView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="专业评论"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="查看全部"
+                    android:textSize="18sp"
+                    android:id="@+id/show_all_zy"
+                    android:layout_alignParentRight="true"
+                    />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/xiangyou"
+                    />
+            </RelativeLayout>
+            <include layout="@layout/item_common_zy"
+                android:id="@+id/zy_1"
+                ></include>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
