@@ -5,6 +5,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,7 +32,8 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
     LinearLayoutManager linearLayoutManager;
     RecyclerView.Adapter adapter;
     AutoLoadOnScrollListener autoLoadOnScrollListener;
-    private int position;
+    private int position;//这两个都是一个只有listview的fragment去请求数据时所需要的，
+    // 比如我我要请求哪个tag的科学、日报、我要请求哪个id（int）的电影的评论
     private String category;
 
     @Override
@@ -43,7 +45,9 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
     protected void afterCreate(Bundle savedInstanceState) {
         if(getArguments()!=null){
             position = getArguments().getInt(getString(R.string.id_pos));
-            category = getArguments().getSerializable(getString(R.string.id_category)).toString();
+            if(getArguments().getSerializable(getString(R.string.id_category))!=null){
+                category = getArguments().getSerializable(getString(R.string.id_category)).toString();
+            }
         }
         refreshLayout.setOnRefreshListener(this);
         linearLayoutManager=new LinearLayoutManager(getActivity());
@@ -52,32 +56,32 @@ public abstract class BaseListFragment extends BaseFragment implements RefreshLa
         recContent.setItemAnimator(new DefaultItemAnimator());
         adapter=initAdapter();
         recContent.setAdapter(adapter);
-        loadLatestNews(category);
+        loadLatestNews(category,position);
         autoLoadOnScrollListener=new AutoLoadOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-            loadMore(currentPage,category);
+            loadMore(currentPage,category,position);
             }
         };
         recContent.addOnScrollListener(autoLoadOnScrollListener);
         mTvLoadError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadLatestNews(category);
+                loadLatestNews(category,position);
             }
         });
 
     }
 
-    protected abstract void loadMore(int currentPage,String tag);
+    protected abstract void loadMore(int currentPage,String tag,int position);
 
-    protected abstract void loadLatestNews(String tag);
+    protected abstract void loadLatestNews(String tag,int position);
 
     public abstract RecyclerView.Adapter initAdapter() ;
 
     @Override
     public void onRefresh() {
-        loadLatestNews(category);
+        loadLatestNews(category,position);
 
     }
     public void showProgress() {

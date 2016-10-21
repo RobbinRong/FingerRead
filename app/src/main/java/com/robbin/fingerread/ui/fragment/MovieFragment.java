@@ -30,7 +30,7 @@ public class MovieFragment extends BaseListFragment {
     }
 
     @Override
-    protected void loadMore(int currentPage, String tag) {
+    protected void loadMore(int currentPage, String tag,int position) {
         getDataFromHttp(true,currentPage);
     }
 
@@ -69,7 +69,7 @@ public class MovieFragment extends BaseListFragment {
 
     }
     @Override
-    protected void loadLatestNews(String tag) {
+    protected void loadLatestNews(String tag,int position) {
         getDataFromHttp(false,0);
     }
 

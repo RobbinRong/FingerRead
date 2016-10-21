@@ -6,6 +6,7 @@ import com.robbin.fingerread.FingerReadApplication;
 import com.robbin.fingerread.bean.MovieBean;
 import com.robbin.fingerread.bean.MovieBox;
 import com.robbin.fingerread.bean.MovieCelebrity;
+import com.robbin.fingerread.bean.MovieCommonsDP;
 import com.robbin.fingerread.bean.MovieCommonsZY;
 import com.robbin.fingerread.bean.MovieDetail;
 import com.robbin.fingerread.bean.MovieMajor;
@@ -151,4 +152,10 @@ public class RetrofitManager {
                 "android","7.4.0","860308027377288",1,255,"MI%202",
                 "48286829CF2E3DEDD5C94A9DC49FEDE89665DD1BAC0B223DD1BE5EDE86C61441","%2FMovieMainActivity");
     }
+    public Observable<MovieCommonsDP> getMoviCommosDP(String id, int offset, int limit){
+        return mMaoYanService.getMovieCommonsDP(id,"",offset,limit,0,"AmovieBmovieCD-1","7401","xiaomi",
+                "android","7.4.0","860308027377288",1,255,"MI%202",
+                "48286829CF2E3DEDD5C94A9DC49FEDE89665DD1BAC0B223DD1BE5EDE86C61441","%2FMovieMainActivity");
+    }
+
 }

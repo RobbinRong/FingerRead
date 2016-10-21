@@ -414,22 +414,56 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:text="专业评论"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:text="查看全部"
-                    android:textSize="18sp"
-                    android:id="@+id/show_all_zy"
-                    android:layout_alignParentRight="true"
-                    />
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/xiangyou"
+                    android:id="@+id/iv_xiangyou_zy"
+                    android:layout_alignParentRight="true"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看全部"
+                    android:textSize="18sp"
+                    android:id="@+id/show_all_zy"
+                    android:layout_toLeftOf="@id/iv_xiangyou_zy"
                     />
             </RelativeLayout>
             <include layout="@layout/item_common_zy"
                 android:id="@+id/zy_1"
+                ></include>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/rl_commentDP"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="短评"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/xiangyou"
+                    android:id="@+id/iv_xiangyou_dp"
+                    android:layout_alignParentRight="true"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看全部"
+                    android:textSize="18sp"
+                    android:id="@+id/show_all_dp"
+                    android:layout_toLeftOf="@id/iv_xiangyou_dp"
+                    />
+            </RelativeLayout>
+            <include layout="@layout/item_common_dp"
+                android:id="@+id/dp_1"
                 ></include>
         </LinearLayout>
 

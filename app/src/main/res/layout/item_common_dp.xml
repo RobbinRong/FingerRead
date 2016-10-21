@@ -25,7 +25,7 @@
             app:riv_corner_radius="20dip"
             app:riv_border_width="0dip"
             app:riv_oval="true"
-            android:id="@+id/iv_zy" />
+            android:id="@+id/iv_dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,44 +33,44 @@
             android:text="name"
             android:layout_marginLeft="10dp"
             android:textColor="#000"
-            android:id="@+id/tv_name"
-            android:layout_toRightOf="@id/iv_zy"/>
+            android:id="@+id/tv_name_dp"
+            android:layout_toRightOf="@id/iv_dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:text="authInfo"
+            android:text="city"
             android:layout_marginTop="5dp"
-            android:id="@+id/tv_authinfo"
-            android:layout_below="@id/tv_name"
+            android:id="@+id/tv_city"
+            android:layout_below="@id/tv_name_dp"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/iv_zy"/>
+            android:layout_toRightOf="@id/iv_dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分"
             android:textSize="14sp"
-            android:id="@+id/tv_fen"
+            android:id="@+id/tv_fen_dp"
             android:textColor="#FFC125"
             android:layout_alignParentRight="true"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_score"
+            android:id="@+id/tv_score_dp"
             android:text="9"
             android:textSize="20sp"
             android:textColor="#FFC125"
-            android:layout_toLeftOf="@id/tv_fen"
+            android:layout_toLeftOf="@id/tv_fen_dp"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content "
-            android:id="@+id/tv_content"
-            android:layout_toRightOf="@id/iv_zy"
-            android:layout_below="@id/tv_authinfo"
+            android:id="@+id/tv_content_dp"
+            android:layout_toRightOf="@id/iv_dp"
+            android:layout_below="@id/tv_city"
             android:textColor="#000"
             android:layout_marginTop="5dp"
             />
@@ -79,26 +79,26 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:text="2016.10.20"
-            android:id="@+id/tv_date"
-            android:layout_toRightOf="@id/iv_zy"
-            android:layout_below="@id/tv_content"
+            android:id="@+id/tv_date_dp"
+            android:layout_toRightOf="@id/iv_dp"
+            android:layout_below="@id/tv_content_dp"
             android:layout_marginTop="10dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_common_approve"
+            android:id="@+id/tv_common_approve_dp"
             android:textSize="12sp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/tv_content"
+            android:layout_below="@id/tv_content_dp"
             android:layout_alignParentRight="true"
             android:text="4567"/>
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_below="@id/tv_content"
+            android:layout_below="@id/tv_content_dp"
             android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@id/tv_common_approve"
+            android:layout_toLeftOf="@id/tv_common_approve_dp"
             android:src="@drawable/zan"/>
 
     </RelativeLayout>

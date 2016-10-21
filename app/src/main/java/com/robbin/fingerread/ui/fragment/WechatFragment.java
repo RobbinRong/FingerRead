@@ -20,12 +20,12 @@ import rx.schedulers.Schedulers;
 public class WechatFragment extends  BaseListFragment {
     private WechatAdapter adapter;
     @Override
-    protected void loadMore(int currentPage,String tag) {
+    protected void loadMore(int currentPage,String tag,int position) {
         getDataFromHttp(currentPage,tag,true);
     }
 
     @Override
-    protected void loadLatestNews(String tag) {
+    protected void loadLatestNews(String tag,int position) {
        getDataFromHttp(1,tag,false);
     }
 

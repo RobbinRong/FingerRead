@@ -33,7 +33,8 @@
         <activity android:name=".ui.activity.MovieVDDetailActivity" />
         <activity android:name=".ui.activity.MovieDetailActivity" />
         <activity android:name="io.vov.vitamio.activity.InitActivity" />
-        <activity android:name=".ui.activity.MovieCommentZYActivity"></activity>
+        <activity android:name=".ui.activity.MovieCommentZYActivity" />
+        <activity android:name=".ui.activity.MovieCommentDPActivity"></activity>
     </application>
 
 </manifest>

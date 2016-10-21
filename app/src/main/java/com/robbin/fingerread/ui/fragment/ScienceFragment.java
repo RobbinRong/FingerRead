@@ -24,12 +24,12 @@ public class ScienceFragment extends BaseListFragment {
     private ScienceAdapter adapter;
 
     @Override
-    protected void loadMore(int currentPage,String tag) {
+    protected void loadMore(int currentPage,String tag,int position) {
 
     }
 
     @Override
-    protected void loadLatestNews(String tag) {
+    protected void loadLatestNews(String tag,int position) {
         RetrofitManager.builderScience().getScience(tag)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

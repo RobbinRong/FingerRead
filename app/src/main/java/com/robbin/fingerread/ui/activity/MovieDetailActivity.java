@@ -24,9 +24,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.robbin.fingerread.R;
-import com.robbin.fingerread.adapter.MovieCommonZYAdapter;
 import com.robbin.fingerread.bean.MovieBox;
 import com.robbin.fingerread.bean.MovieCelebrity;
+import com.robbin.fingerread.bean.MovieCommonsDP;
 import com.robbin.fingerread.bean.MovieCommonsZY;
 import com.robbin.fingerread.bean.MovieDetail;
 import com.robbin.fingerread.bean.MovieMajor;
@@ -43,7 +43,7 @@ import rx.schedulers.Schedulers;
 public class MovieDetailActivity extends BaseActivity implements View.OnClickListener{
     public static  final  String KEY_MOVIE_DETAIL="moviedetailactivity";
     public static  final  String TAG="moviedetailactivity";
-    private String movieId;
+    private String  movieId;
 
     @Bind(R.id.iv_img)
     ImageView ivImg;
@@ -99,8 +99,12 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvSumBox;
     @Bind(R.id.zy_1)
     View viewZY1;
+    @Bind(R.id.dp_1)
+    View viewDP1;
     @Bind(R.id.rl_commentZY)
     RelativeLayout rlCommentZY;
+    @Bind(R.id.rl_commentDP)
+    RelativeLayout rlCommentDP;
     private MovieDetail movieDetail;
 
     private int maxLines;
@@ -109,6 +113,7 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
     private boolean isShowAllMajor=false;
     private static final int MAX = 3;//初始maxLine大小
     private static final int MAXMAJOR = 2;//初始maxLine大小
+
 
     @Override
     protected int getLayoutId() {
@@ -127,6 +132,8 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
         imShowMajorAll.setOnClickListener(this);
         imbShowAll.setOnClickListener(this);
         rlCommentZY.setOnClickListener(this);
+        rlCommentDP.setOnClickListener(this);
+
     }
 
     private void getDataFromHttp() {
@@ -195,17 +202,45 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                         Log.e(TAG, "callzy: "+throwable.getMessage());
                     }
                 });
+        RetrofitManager.builderMaoYan().getMoviCommosDP(movieId,0,1).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<MovieCommonsDP>() {
+                    @Override
+                    public void call(MovieCommonsDP commonsDP) {
+                        loadCommonDP(commonsDP);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, "callzy: "+throwable.getMessage());
+                    }
+                });
+    }
+
+    private void loadCommonDP(MovieCommonsDP commonsDP) {
+        Log.e(TAG, "loadCommonDP: dp"+commonsDP.toString());
+        MovieCommonsDP.Hcmts hcmts = commonsDP.hcmts.get(0);
+        com.makeramen.roundedimageview.RoundedImageView userLogo= (RoundedImageView) viewDP1.findViewById(R.id.iv_dp);
+        TextView tvName= (TextView) viewDP1.findViewById(R.id.tv_name_dp);
+        TextView tvCity = (TextView) viewDP1.findViewById(R.id.tv_city);
+        TextView tvScore=(TextView) viewDP1.findViewById(R.id.tv_score_dp);
+        TextView tvContent= (TextView) viewDP1.findViewById(R.id.tv_content_dp);
+        TextView tvDate=(TextView) viewDP1.findViewById(R.id.tv_date_dp);
+        TextView tvAprove= (TextView) viewDP1.findViewById(R.id.tv_common_approve_dp);
+        Glide.with(this).load(hcmts.avatarurl).placeholder(R.drawable.ic_placeholder).into(userLogo);
+        tvName.setText(hcmts.nickName);
+        tvCity.setText(hcmts.cityName);
+        tvScore.setText(hcmts.score*2+"");
+        tvContent.setText(hcmts.content);
+        tvDate.setText(hcmts.startTime);
+        tvAprove.setText(hcmts.approve);
     }
 
     private void loadCommonZY(MovieCommonsZY commonZY) {
         List<MovieCommonsZY.Data> data = commonZY.data;
         l(viewZY1,data.get(0));
-        // lvCommonsZY.setAdapter(new MovieCommonZYAdapter(commonZY,this));
-        //setListViewHeightBasedOnChildren(lvCommonsZY);
-
     }
     private  void l(View view,MovieCommonsZY.Data data){
-        Log.e(TAG, "l: "+data);
        com.makeramen.roundedimageview.RoundedImageView userLogo= (RoundedImageView) view.findViewById(R.id.iv_zy);
        TextView tvName= (TextView) view.findViewById(R.id.tv_name);
        TextView tvAuthinfo = (TextView) view.findViewById(R.id.tv_authinfo);
@@ -222,25 +257,8 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
        tvAprove.setText(data.approve);
 
     }
-/*    private void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter(); //获得Adapter
-        if (listAdapter == null) {  //判断是否为空
-            return;
-        }
-        int totalHeight = 0;  //定义总高度
-        //根据listAdapter.getCount()获取当前拥有多少个item项，然后进行遍历对每一个item获取高度再相加最终获得总的高度。
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-        //获取到list的布局属性
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        //listview最终高度为item的高度+分隔线的高度，这是重新设置listview的属性
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//将重新设置的params再应用到listview中
-        listView.setLayoutParams(params);
-    }*/
+
+    //票房
     private void loadBox(MovieBox box) {
         MovieBox.Mbox mbox = box.mbox;
         tvRank.setText(mbox.lastDayRank+"");
@@ -248,6 +266,7 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
         tvSumBox.setText(mbox.sumBox+"");
     }
 
+    //主创说
     private void loadMajor(MovieMajor major) {
         MovieMajor.Major m = major.data.major.get(0);
         if(null!=m){
@@ -260,6 +279,7 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    //主演，阵容
     private void loadCelebrity(MovieCelebrity celebrity) {
             MovieCelebrity mc=new MovieCelebrity();
             List<MovieCelebrity.Data> datas= new ArrayList<MovieCelebrity.Data>();
@@ -360,7 +380,10 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 toggleMajor();
                 break;
             case R.id.rl_commentZY:
-
+                MovieCommentZYActivity.start(this,movieId);
+                break;
+            case R.id.rl_commentDP:
+                MovieCommentDPActivity.start(this,movieId);
                 break;
             default:
                 break;

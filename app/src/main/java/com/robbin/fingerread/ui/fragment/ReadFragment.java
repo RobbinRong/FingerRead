@@ -21,12 +21,12 @@ public class ReadFragment extends BaseListFragment {
     private ReadAdapter adapter;
 
     @Override
-    protected void loadMore(int currentPage,String tag) {
+    protected void loadMore(int currentPage,String tag,int position) {
 
     }
 
     @Override
-    protected void loadLatestNews(String tag) {
+    protected void loadLatestNews(String tag,int position) {
         RetrofitManager.builderRead().getBook(tag)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
