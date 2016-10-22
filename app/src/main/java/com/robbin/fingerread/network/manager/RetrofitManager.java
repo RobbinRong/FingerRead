@@ -143,16 +143,16 @@ public class RetrofitManager {
         return mWechatService.getArticalList("","0",String.valueOf(page),"19588",d,typeid,"d650ea2058644774a544a18430e8cedd");
     }
     public Observable<MovieBean> getMovies(String type, String offset,String limit){return mMovieService.getMovies(type,offset,limit);}
-    public Observable<MovieDetail> getMovieDetail(String id){return mMovieService.getMovieDetail(id);}
-    public Observable<MovieCelebrity> getMovieCelebrity(String id){return mMaoYanService.getMovieCelebrity(id);}
-    public Observable<MovieMajor> getMovieMajor(String id){return mMaoYanService.getMovieMajor(id);}
-    public Observable<MovieBox> getMovieBox(String id){return mMaoYanService.getMovieBox(id);}
-    public Observable<MovieCommonsZY> getMoviCommosZY(String id,int offset,int limit){
+    public Observable<MovieDetail> getMovieDetail(int id){return mMovieService.getMovieDetail(id);}
+    public Observable<MovieCelebrity> getMovieCelebrity(int id){return mMaoYanService.getMovieCelebrity(id);}
+    public Observable<MovieMajor> getMovieMajor(int id){return mMaoYanService.getMovieMajor(id);}
+    public Observable<MovieBox> getMovieBox(int id){return mMaoYanService.getMovieBox(id);}
+    public Observable<MovieCommonsZY> getMoviCommosZY(int id,int offset,int limit){
         return mMaoYanService.getMovieCommonsZY(id,offset,limit,"AmovieBmovieCD-1","7401","xiaomi",
                 "android","7.4.0","860308027377288",1,255,"MI%202",
                 "48286829CF2E3DEDD5C94A9DC49FEDE89665DD1BAC0B223DD1BE5EDE86C61441","%2FMovieMainActivity");
     }
-    public Observable<MovieCommonsDP> getMoviCommosDP(String id, int offset, int limit){
+    public Observable<MovieCommonsDP> getMoviCommosDP(int id, int offset, int limit){
         return mMaoYanService.getMovieCommonsDP(id,"",offset,limit,0,"AmovieBmovieCD-1","7401","xiaomi",
                 "android","7.4.0","860308027377288",1,255,"MI%202",
                 "48286829CF2E3DEDD5C94A9DC49FEDE89665DD1BAC0B223DD1BE5EDE86C61441","%2FMovieMainActivity");

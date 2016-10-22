@@ -24,10 +24,10 @@ public class MovieCommentDPActivity extends BaseActivity {
 
     @Override
     protected void afterCreate(Bundle savedInstanceState)  {
-        String  id = getIntent().getStringExtra(KEY_MOVIE_COMMENTDP);
+        int  id = getIntent().getIntExtra(KEY_MOVIE_COMMENTDP,0);
         showNewsDetailFragment(id);
 }
-    private void showNewsDetailFragment(String id) {
+    private void showNewsDetailFragment(int id) {
         Fragment fragment= MovieCommentDPFragment.newInstance(id);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
@@ -35,7 +35,7 @@ public class MovieCommentDPActivity extends BaseActivity {
         transaction.commit();
     }
 
-    public static void start(Context context, String movieId) {
+    public static void start(Context context, int movieId) {
         Intent intent=new Intent(context,MovieCommentDPActivity.class);
         intent.putExtra(KEY_MOVIE_COMMENTDP,movieId);
         context.startActivity(intent);

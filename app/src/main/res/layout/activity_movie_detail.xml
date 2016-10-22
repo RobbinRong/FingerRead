@@ -230,6 +230,7 @@
                 android:textColor="#000"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:id="@+id/tv_yanyuanzhenrong"
                 android:text="演员阵容"/>
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -247,6 +248,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/ll_zhuchuangshuo"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
@@ -262,7 +264,8 @@
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/rl_zhucuangshuo">
                 <com.makeramen.roundedimageview.RoundedImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:scaleType="fitCenter"
@@ -279,6 +282,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/iv_major"
                     android:orientation="vertical"
+                    android:id="@+id/ll_zhuchuang_content"
                     android:layout_marginLeft="5dp"
                     >
                     <RelativeLayout
@@ -318,11 +322,14 @@
                         android:layout_gravity="center_horizontal"
                         />
                 </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:src="@drawable/item_divide"
+                    android:layout_below="@id/ll_zhuchuang_content"
+                    />
             </RelativeLayout>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:src="@drawable/item_divide"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -347,7 +354,7 @@
                         android:id="@+id/tv_box_last_day_rank"
                         android:textSize="20sp"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="#f00"/>
+                        android:textColor="@color/colorBoxRed"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -368,7 +375,7 @@
                         android:id="@+id/tv_box_frist_week"
                         android:textSize="20sp"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="#f00"/>
+                        android:textColor="@color/colorBoxRed"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -389,7 +396,7 @@
                         android:id="@+id/tv_sum_box"
                         android:textSize="20sp"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="#f00"/>
+                        android:textColor="@color/colorBoxRed"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">FingerRead</string>
     <string name="science">Science</string>
+    <string name="movie">Movie</string>
     <string name="wechat">Wechat</string>
+    <string name="next_exit">Press another exit</string>
     <string name="about">About</string>
     <string name="id_pos" translatable="false">position</string>
     <string name="daily">Daily</string>
@@ -28,7 +30,7 @@
     <string name="user_ame">Robbin</string>
     <string name="read">read</string>
     <string name="user_email">rongjabin@gmail.com</string>
-    <string name="about_function_list">* 知乎日报、果壳网新闻、豆瓣图书数据显示\n* 以上三种详情页面展示\n* 错误界面处理\n* 上拉加载更多\n* 已读内容标记\n* 收藏功能\n* 搜索图书\n* 滑动返回\n* 分享功能\n* 夜间模式\n* 主题切换</string>
+    <string name="about_function_list">* 知乎日报、科技新闻、电影资讯数据显示\n* 以上三种详情页面展示\n* 错误界面处理\n* 上拉加载更多\n* 已读内容标记\n* 收藏功能\n* 滑动返回\n* 分享功能\n* 夜间模式\n* 语言切换</string>
 
     <string-array name="langs" translatable="false">
         <item>English</item>
@@ -56,6 +58,5 @@
     <string name="text_share_from">"share from "</string>
     <string name="notify_add_to_collection">add to collection successful</string>
     <string name="text_hot"> hot </string>
-    <string name="text_swipe_to_return">Swipe to Return</string>
     <string name="text_day_mode">Day Mode</string>
 </resources>

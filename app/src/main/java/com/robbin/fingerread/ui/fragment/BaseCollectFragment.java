@@ -23,11 +23,9 @@ public class BaseCollectFragment extends TopNavigationFragment {
                     fragment = new CollectDailyFragment();
                 }
                 else if(position==1){
-                    fragment = new CollectReadFragment();
-                }else if(position==2){
                     fragment = new CollectScienceFragment();
                 }
-                else if(position==3){
+                else if(position==2){
                     fragment = new CollectWechatFragment();
                 }
                 Bundle bundle = new Bundle();

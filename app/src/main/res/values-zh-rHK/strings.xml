@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">指讀</string>
-    <string name="science">科學</string>
+    <string name="science">科技</string>
     <string name="wechat">微信</string>
     <string name="about">關於</string>
-    <string name="id_pos" translatable="false">position</string>
+    <string name="movie">電影</string>
+    <string name="next_exit">再按一次退出</string>
     <string name="daily">日報</string>
     <string name="text_noinfo">\n\n\n\n\t\t\t\t\t\t\t\t\t啊哦，這裡沒有信息</string>
     <string name="text_pubdate">"Publish Date "</string>
     <string name="text_price">"Price "</string>
-    <string name="id_category" translatable="false">category</string>
     <string name="notify_remove_from_collection">已從收藏夾移除</string>
     <string name="collection">收藏</string>
     <string name="pages">Page　</string>
@@ -28,13 +28,8 @@
     <string name="user_ame">榮先生</string>
     <string name="read">閱讀</string>
     <string name="user_email">rongjabin@gmail.com</string>
-    <string name="about_function_list">* 知乎日報、果殼網新聞、豆瓣圖書數據顯示\n* 以上三種詳情頁面展示\n* 錯誤頁面處理\n* 上拉加載更多\n* 已讀內容標記\n* 收藏功能 \n* 滑動返回\n* 分享功能\n* 夜間模式\n* 語言切換</string>
+    <string name="about_function_list">* 知乎日報、科技新聞、電影資訊數據顯示\n* 以上三種詳情頁面展示\n* 錯誤頁面處理\n* 上拉加載更多\n* 已讀內容標記\n* 收藏功能 \n* 滑動返回\n* 分享功能\n* 夜間模式\n* 語言切換</string>
 
-    <string-array name="langs" translatable="false">
-        <item>English</item>
-        <item>简体中文</item>
-        <item>繁體中文</item>
-    </string-array>
 
     <string-array name="search">
         <item>@string/text_search_by_keyword</item>

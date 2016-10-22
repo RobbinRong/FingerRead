@@ -47,6 +47,7 @@ public class WechatFragment extends  BaseListFragment {
                     adapter.change(wechatArticalBean);
                 }
                 else {
+                    autoLoadOnScrollListener.setLoading(false);
                     adapter.append(wechatArticalBean);
                 }
                 refreshLayout.setRefreshing(false);

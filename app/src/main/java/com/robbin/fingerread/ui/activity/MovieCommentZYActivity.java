@@ -33,10 +33,10 @@ public class MovieCommentZYActivity extends BaseActivity {
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-        String  id = getIntent().getStringExtra(KEY_MOVIE_COMMENTZY);
+        int  id = getIntent().getIntExtra(KEY_MOVIE_COMMENTZY,0);
         showNewsDetailFragment(id);
     }
-    private void showNewsDetailFragment(String id) {
+    private void showNewsDetailFragment(int id) {
         Fragment fragment= MovieCommentZYFragment.newInstance(id);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
@@ -44,7 +44,7 @@ public class MovieCommentZYActivity extends BaseActivity {
         transaction.commit();
     }
 
-    public  static  void start(Context context,String id){
+    public  static  void start(Context context,int id){
         Intent intent=new Intent(context,MovieCommentZYActivity.class);
         intent.putExtra(KEY_MOVIE_COMMENTZY,id);
         context.startActivity(intent);

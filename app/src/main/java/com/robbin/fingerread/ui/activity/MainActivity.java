@@ -3,6 +3,8 @@ package com.robbin.fingerread.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,9 +26,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.robbin.fingerread.R;
 import com.robbin.fingerread.constant.Settings;
 import com.robbin.fingerread.ui.fragment.BaseCollectFragment;
-import com.robbin.fingerread.ui.fragment.BaseFragment;
 import com.robbin.fingerread.ui.fragment.BaseMovieFragment;
-import com.robbin.fingerread.ui.fragment.BaseReadFragment;
 import com.robbin.fingerread.ui.fragment.BaseScienceFragment;
 import com.robbin.fingerread.ui.fragment.BaseWechatFragment;
 import com.robbin.fingerread.ui.fragment.DailyFragment;
@@ -38,6 +38,8 @@ public class MainActivity extends BaseActivityWithNoSwip {
 
     @Bind(R.id.toolbar)
     public Toolbar toolbar;
+    @Bind(R.id.main_content)
+    CoordinatorLayout mainContent;
     public AccountHeader header;
     public Drawer drawer;
     private Fragment currentFragment;
@@ -49,14 +51,6 @@ public class MainActivity extends BaseActivityWithNoSwip {
     @Override
     protected int getLayoutId() {
         Settings.isNightMode = mSettings.getBoolean(Settings.NIGHT_MODE, false);
-
-        // change Brightness
-//        if(mSettings.isNightMode && Utils.getSysScreenBrightness() > CONSTANT.NIGHT_BRIGHTNESS){
-//            Utils.setSysScreenBrightness(CONSTANT.NIGHT_BRIGHTNESS);
-//        }else if(mSettings.isNightMode == false && Utils.getSysScreenBrightness() == CONSTANT.NIGHT_BRIGHTNESS){
-//            Utils.setSysScreenBrightness(CONSTANT.DAY_BRIGHTNESS);
-//        }
-
         if(Settings.isNightMode){
             this.setTheme(R.style.NightTheme);
         }else{
@@ -94,7 +88,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
                 .withAccountHeader(header).withSliderBackgroundColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.night_primary) : ContextCompat.getColor(this, R.color.white))
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.daily).withIcon(R.mipmap.ic_home).withIdentifier(R.mipmap.ic_home).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
-                        new PrimaryDrawerItem().withName(R.string.read).withIcon(R.mipmap.ic_reading).withIdentifier(R.mipmap.ic_reading).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
+                        new PrimaryDrawerItem().withName(R.string.movie).withIcon(R.mipmap.ic_movie).withIdentifier(R.mipmap.ic_movie).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.science).withIcon(R.mipmap.ic_science).withIdentifier(R.mipmap.ic_science).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.wechat).withIcon(R.mipmap.ic_wechat).withIdentifier(R.mipmap.ic_wechat).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
                         new PrimaryDrawerItem().withName(R.string.collect).withIcon(R.mipmap.ic_collect_grey).withIdentifier(R.mipmap.ic_collect_grey).withTextColor(Settings.isNightMode ? ContextCompat.getColor(this, R.color.white) : ContextCompat.getColor(this, R.color.text_color)),
@@ -104,7 +98,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
                         .withIcon(Settings.isNightMode == true?R.mipmap.ic_day_white:R.mipmap.ic_night).withIdentifier(R.mipmap.ic_night)
                         .withTextColor(Settings.isNightMode?ContextCompat.getColor(this, R.color.white):ContextCompat.getColor(this,R.color.text_light))
                         ,new SecondaryDrawerItem().withName(R.string.text_language)
-                                .withIcon(Settings.isNightMode == true?R.mipmap.ic_day_white:R.mipmap.ic_night).withIdentifier(R.mipmap.ic_launcher)
+                                .withIcon(R.mipmap.ic_language).withIdentifier(R.mipmap.ic_language)
                                 .withTextColor(Settings.isNightMode?ContextCompat.getColor(this, R.color.white):ContextCompat.getColor(this,R.color.text_light))
                           ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -115,7 +109,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
                                       return  false;
                                 currentFragment=new DailyFragment();
                                 break;
-                            case R.mipmap.ic_reading:
+                            case R.mipmap.ic_movie:
                                 if (currentFragment instanceof BaseMovieFragment)
                                     return  false;
                                 currentFragment=new BaseMovieFragment();
@@ -144,8 +138,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
                                    mSettings.putBoolean(mSettings.NIGHT_MODE, Settings.isNightMode);
                                    MainActivity.this.recreate();
                                    return false;
-                            case R.mipmap.ic_launcher:
-
+                            case R.mipmap.ic_language:
                                    showLangDialog();
                                    return false;
                         }
@@ -161,7 +154,7 @@ public class MainActivity extends BaseActivityWithNoSwip {
         if(currentFragment instanceof DailyFragment){
             switchFragment(currentFragment, getString(R.string.daily));
         }else if(currentFragment instanceof BaseMovieFragment){
-            switchFragment(currentFragment, getString(R.string.read));
+            switchFragment(currentFragment, getString(R.string.movie));
         }else if(currentFragment instanceof BaseScienceFragment){
             switchFragment(currentFragment, getString(R.string.science));
         }
@@ -177,12 +170,25 @@ public class MainActivity extends BaseActivityWithNoSwip {
         fragmentTransaction.replace(R.id.fl_content, fragment);
         fragmentTransaction.commit();
         getSupportActionBar().setTitle(title);
-    } @Override
+    }
+    private long startTime=1;
+    @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen()){
             drawer.closeDrawer();
         }else{
-            super.onBackPressed();
+            if(startTime==1){
+                startTime=System.currentTimeMillis();
+                Snackbar.make(mainContent,R.string.next_exit,Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            long endTime=System.currentTimeMillis();
+            if(endTime-startTime<3000){
+                super.onBackPressed();
+            }
+            else {
+                startTime=1;
+            }
         }
     }
     private void showLangDialog() {

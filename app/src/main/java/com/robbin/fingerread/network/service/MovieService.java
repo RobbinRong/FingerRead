@@ -21,7 +21,7 @@ public interface MovieService {
 
     @Headers(RetrofitManager.CACHE_CONTROL_AGE + RetrofitManager.CACHE_STALE_SHORT)
     @GET("{id}.json")
-    public Observable<MovieDetail> getMovieDetail(@Path("id")String id);
+    public Observable<MovieDetail> getMovieDetail(@Path("id")int id);
 
 
 }

@@ -30,6 +30,7 @@ public class BaseMovieFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
+        getActivity().findViewById(R.id.tab_layout).setVisibility(View.GONE);
         BaseMovieAdapter baseMovieAdapter=new BaseMovieAdapter(getActivity().getSupportFragmentManager());
         vpMovie.setAdapter(baseMovieAdapter);
         btnHot.setOnClickListener(this);

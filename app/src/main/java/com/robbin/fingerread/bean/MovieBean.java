@@ -58,7 +58,7 @@ public class MovieBean {
         public String ver;//eg.3D/IMAX 3D
         public String rt;//上映日期
         public String time;
-        public String id;
+        public int id;
 
         public boolean get3d() {
             return threed;

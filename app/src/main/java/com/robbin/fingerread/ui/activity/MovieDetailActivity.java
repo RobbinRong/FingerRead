@@ -2,6 +2,7 @@ package com.robbin.fingerread.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,9 +44,11 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class MovieDetailActivity extends BaseActivity implements View.OnClickListener{
-    public static  final  String KEY_MOVIE_DETAIL="moviedetailactivity";
+    public static  final  String KEY_MOVIE_DETAIL_ID="moviedetailactivityid";
+    public static  final  String KEY_MOVIE_DETAIL_NAME="moviedetailactivityname";
     public static  final  String TAG="moviedetailactivity";
-    private String  movieId;
+    private int  movieId;
+    private String  movieName;
 
     @Bind(R.id.iv_img)
     ImageView ivImg;
@@ -67,8 +72,6 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
     Toolbar toolbar;
     @Bind(R.id.tv_dra)
     TextView tvDra;
-    //@Bind(R.id.lv_commons_zhuanye)
-    //ListView lvCommonsZY;
     @Bind(R.id.iv_play)
     ImageView ivPlay;
     @Bind(R.id.fl_img)
@@ -105,8 +108,15 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
     RelativeLayout rlCommentZY;
     @Bind(R.id.rl_commentDP)
     RelativeLayout rlCommentDP;
+    @Bind(R.id.tv_yanyuanzhenrong)
+    TextView tvZhenRong;
+    @Bind(R.id.sv_celebrity)
+    HorizontalScrollView svCelebrity;
+    @Bind(R.id.ll_zhuchuangshuo)
+    LinearLayout llZhuchuangshuo;
+    @Bind(R.id.rl_zhucuangshuo)
+    RelativeLayout rlZhuchuangshuo;
     private MovieDetail movieDetail;
-
     private int maxLines;
     private int maxLinesMajor;
     private boolean isShowAll=false;
@@ -122,11 +132,13 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-        movieId = getIntent().getStringExtra(KEY_MOVIE_DETAIL);
+        movieId = getIntent().getIntExtra(KEY_MOVIE_DETAIL_ID,0);
+        movieName = getIntent().getStringExtra(KEY_MOVIE_DETAIL_NAME);
         setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(movieName);
         }
         getDataFromHttp();
         imShowMajorAll.setOnClickListener(this);
@@ -160,6 +172,8 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        tvZhenRong.setVisibility(View.GONE);
+                        svCelebrity.setVisibility(View.GONE);
                         Log.e(TAG, "callcelebrity: "+throwable.getMessage());
                     }
                 });
@@ -173,6 +187,8 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        llZhuchuangshuo.setVisibility(View.GONE);
+                        rlZhuchuangshuo.setVisibility(View.GONE);
                         Log.e(TAG, "callmajor: "+throwable.getMessage());
                     }
                 });
@@ -186,6 +202,12 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        tvRank.setTextColor(ContextCompat.getColor(MovieDetailActivity.this,R.color.colorBoxZanWu));
+                        tvRank.setText("暂无");
+                        tvFirstWeek.setTextColor(ContextCompat.getColor(MovieDetailActivity.this,R.color.colorBoxZanWu));
+                        tvFirstWeek.setText("暂无");
+                        tvSumBox.setTextColor(ContextCompat.getColor(MovieDetailActivity.this,R.color.colorBoxZanWu));
+                        tvSumBox.setText("暂无");
                         Log.e(TAG, "callbox: "+throwable.getMessage());
                     }
                 });
@@ -199,6 +221,8 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        rlCommentZY.setVisibility(View.GONE);
+                        viewZY1.setVisibility(View.GONE);
                         Log.e(TAG, "callzy: "+throwable.getMessage());
                     }
                 });
@@ -212,13 +236,19 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+                        rlCommentDP.setVisibility(View.GONE);
+                        viewDP1.setVisibility(View.GONE);
                         Log.e(TAG, "callzy: "+throwable.getMessage());
                     }
                 });
     }
 
     private void loadCommonDP(MovieCommonsDP commonsDP) {
-        Log.e(TAG, "loadCommonDP: dp"+commonsDP.toString());
+        if(commonsDP.hcmts.isEmpty()){
+            rlCommentDP.setVisibility(View.GONE);
+            viewDP1.setVisibility(View.GONE);
+            return;
+        }
         MovieCommonsDP.Hcmts hcmts = commonsDP.hcmts.get(0);
         com.makeramen.roundedimageview.RoundedImageView userLogo= (RoundedImageView) viewDP1.findViewById(R.id.iv_dp);
         TextView tvName= (TextView) viewDP1.findViewById(R.id.tv_name_dp);
@@ -233,11 +263,16 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
         tvScore.setText(hcmts.score*2+"");
         tvContent.setText(hcmts.content);
         tvDate.setText(hcmts.startTime);
-        tvAprove.setText(hcmts.approve);
+        tvAprove.setText(hcmts.approve+"");
     }
 
     private void loadCommonZY(MovieCommonsZY commonZY) {
         List<MovieCommonsZY.Data> data = commonZY.data;
+        if(data.isEmpty()){
+            rlCommentZY.setVisibility(View.GONE);
+            viewZY1.setVisibility(View.GONE);
+            return;
+        }
         l(viewZY1,data.get(0));
     }
     private  void l(View view,MovieCommonsZY.Data data){
@@ -254,42 +289,64 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
        tvScore.setText(data.score*2+"");
        tvContent.setText(data.content);
        tvDate.setText(data.startTime);
-       tvAprove.setText(data.approve);
+       tvAprove.setText(data.approve+"");
 
     }
 
     //票房
     private void loadBox(MovieBox box) {
         MovieBox.Mbox mbox = box.mbox;
-        tvRank.setText(mbox.lastDayRank+"");
-        tvFirstWeek.setText(mbox.firstWeekBox+"");
-        tvSumBox.setText(mbox.sumBox+"");
+        if(mbox.lastDayRank==0){
+            tvRank.setTextColor(ContextCompat.getColor(this,R.color.colorBoxZanWu));
+            tvRank.setText("暂无");
+        }
+        else {
+            tvRank.setText(mbox.lastDayRank+"");
+        }
+        if(mbox.firstWeekBox==0){
+            tvFirstWeek.setTextColor(ContextCompat.getColor(this,R.color.colorBoxZanWu));
+            tvFirstWeek.setText("暂无");
+        }
+        else {
+            tvFirstWeek.setText(mbox.firstWeekBox+"");
+        }
+        if(mbox.sumBox==0){
+            tvSumBox.setTextColor(ContextCompat.getColor(this,R.color.colorBoxZanWu));
+            tvSumBox.setText("暂无");
+        }
+        else {
+            tvSumBox.setText(mbox.sumBox+"");
+        }
     }
 
     //主创说
     private void loadMajor(MovieMajor major) {
-        MovieMajor.Major m = major.data.major.get(0);
-        if(null!=m){
+        if(!major.data.major.isEmpty()){
+            MovieMajor.Major m = major.data.major.get(0);
             Glide.with(this).load(m.avatarurl).placeholder(R.drawable.ic_placeholder).into(imMajor);
             tvMajorName.setText(m.nickName);
             tvMajorContent.setText(m.content);
             maxLinesMajor=tvMajorContent.getLineCount();
             tvMajorContent.setMaxLines(MAXMAJOR);
-            tvApprove.setText(m.approve);
+            tvApprove.setText(m.approve+"");
+        }
+        else {
+            llZhuchuangshuo.setVisibility(View.GONE);
+            rlZhuchuangshuo.setVisibility(View.GONE);
         }
     }
 
     //主演，阵容
     private void loadCelebrity(MovieCelebrity celebrity) {
-            MovieCelebrity mc=new MovieCelebrity();
             List<MovieCelebrity.Data> datas= new ArrayList<MovieCelebrity.Data>();
             for (int i=0;i<celebrity.data.size();i++){
             for(int j=0;j<celebrity.data.get(i).size();j++){
                 datas.add(celebrity.data.get(i).get(j));
             }
         }
+        boolean isshow=false;
         for(int i=0;i<datas.size();i++){
-            if(!datas.get(i).still.isEmpty()){
+            if(null!=datas.get(i).still&&!datas.get(i).still.isEmpty()){
                 View view= LayoutInflater.from(this).inflate(R.layout.celebrity_item,null,false);
                 ImageView ivCelebrity= (ImageView) view.findViewById(R.id.iv_celebrity);
                 TextView tvCelebrityName= (TextView) view.findViewById(R.id.tv_celebrity_name);
@@ -299,18 +356,17 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
                 tvCelebrityName.setText(d.cnm);
                 tvCelebrityJueSe.setText("饰 "+d.roles);
                 llCelebrity.addView(view);
+                isshow=true;
             }
-
+        }
+        if(!isshow){
+            tvZhenRong.setVisibility(View.GONE);
+            svCelebrity.setVisibility(View.GONE);
         }
 
 
     }
     private void loadData(MovieDetail detail) {
-        ActionBar actionBar=getSupportActionBar();
-
-        if(actionBar!=null){
-            actionBar.setTitle(detail.data.MovieDetailModel.nm);
-        }
         final MovieDetail.MovieDetailModel detailModel=detail.data.MovieDetailModel;
         Glide.with(this).load(detailModel.img).placeholder(R.drawable.ic_gaoyuanyuan).into(ivImg);
         tvNm.setText(detailModel.nm);
@@ -325,7 +381,6 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
         tvDra.setText(dra);
         maxLines=tvDra.getLineCount();
         tvDra.setMaxLines(MAX);
-        Log.e(TAG, "loadData: linecount"+tvDra.getLineCount()+"line height"+tvDra.getLineHeight());
         tvDur.setText(" /"+detailModel.dur+"分钟");
         tvRt.setText(detailModel.rt);
         tvSc.setText(String.valueOf(detailModel.sc));
@@ -362,9 +417,10 @@ public class MovieDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    public static  void start(Context context, String id){
+    public static  void start(Context context, int id,String movieName){
         Intent intent=new Intent(context,MovieDetailActivity.class);
-        intent.putExtra(KEY_MOVIE_DETAIL,id);
+        intent.putExtra(KEY_MOVIE_DETAIL_ID,id);
+        intent.putExtra(KEY_MOVIE_DETAIL_NAME,movieName);
         context.startActivity(intent);
 
     }

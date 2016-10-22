@@ -31,9 +31,7 @@ import rx.schedulers.Schedulers;
  * Created by OneAPM on 2016/8/23.
  */
 public  class DailyFragment extends BaseFragment implements RefreshLayout.OnRefreshListener{
-//
-//    @Bind(R.id.toolbar)
-//    Toolbar mToolbar;
+
     @Bind(R.id.tv_load_error)
     TextView mTvLoadError;
     @Bind(R.id.rcv_daily_list)
@@ -54,18 +52,13 @@ public  class DailyFragment extends BaseFragment implements RefreshLayout.OnRefr
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-//        AppCompatActivity activity = (AppCompatActivity) getActivity();
-//        activity.setSupportActionBar(mToolbar);
-
-        //refreshLayout.setOnLoadListener(this);
-
         getActivity().findViewById(R.id.tab_layout).setVisibility(View.GONE);
         refreshLayout.setOnRefreshListener(this);
         linearLayoutManager=new LinearLayoutManager(getActivity());
         mRcvNewsList.setLayoutManager(linearLayoutManager);
         mRcvNewsList.setHasFixedSize(true);
         mRcvNewsList.setItemAnimator(new DefaultItemAnimator());
-        dailyAdapter = new DailyAdapter(getActivity(),new ArrayList<News>());//=====================================
+        dailyAdapter = new DailyAdapter(getActivity(),new ArrayList<News>());
         mRcvNewsList.setAdapter(dailyAdapter);
         loadLatestNews();
         autoLoadOnScrollListener = new AutoLoadOnScrollListener(linearLayoutManager) {

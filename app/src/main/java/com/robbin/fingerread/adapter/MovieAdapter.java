@@ -91,7 +91,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.cvItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieDetailActivity.start(context,movie.id);
+                MovieDetailActivity.start(context,movie.id,movie.nm);
             }
         });
     }

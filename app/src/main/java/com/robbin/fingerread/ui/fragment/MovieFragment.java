@@ -48,6 +48,7 @@ public class MovieFragment extends BaseListFragment {
                     public void call(MovieBean movieBean) {
                         hideProgress();
                         if(ismore){
+                            autoLoadOnScrollListener.setLoading(false);
                             adapter.append(movieBean,position);
                         }
                         else{

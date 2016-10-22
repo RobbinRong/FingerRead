@@ -12,5 +12,5 @@ public class FingerReadApplication extends Application {
     public void onCreate() {
         super.onCreate();
         AppContext=getApplicationContext();
-    }
+   }
 }
